@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+    body{
+      padding: 1rem;
+    }
+    #example {
+        width: 300px;
+        height: 200px;
+        border: 25px solid #E8C48F;
+        padding: 20px;
+        overflow: auto;
+    }
+    #field {
+      width: 200px;
+      border: 10px groove black;
+      background-color: #00FF00;
+      position: relative;
+      cursor: pointer;
+    }
+
+    #ball {
+      left: 0px;
+      top: 0px;
+      transition: all 1s;
+      position: absolute;
+    }
+
+    #toggler {
+      cursor: pointer;
+    }
+
+    #arrow-toggler{
+      color: #88e788;
+    }
+
+    .message-ball {
+      font-size: 20px;
+      line-height: 200px;
+      text-align: center;
+    }
+    .circle {
+      transition-property: width, height;
+      transition-duration: 2s;
+      position: fixed;
+      transform: translateX(-50%) translateY(-50%);
+      background-color: red;
+      border-radius: 50%;
+    }
+    h3 {
+      margin: 0;
+      padding-bottom: .3em;
+      font-size: 1.1em;
+    }
+
+    p {
+      margin: 0;
+      padding: 0 0 .5em;
+    }
+
+    .pane {
+      background: #edf5e1;
+      padding: 10px 20px 10px;
+      border-top: solid 2px #c4df9b;
+      position: relative;
+    }
+
+    .remove-button {
+      position: absolute;
+      font-size: 110%;
+      top: 0;
+      color: darkred;
+      right: 10px;
+      display: block;
+      width: 24px;
+      height: 24px;
+      border: none;
+      background: transparent;
+      cursor: pointer;
+    }
+
+    .fancy-titles{
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+      font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    }
+    </style>
+    
+</head>
+<body>
+    <div id="example">
+        <h3>Introduction</h3>
+    
+        <p>This Ecma Standard is based on several originating technologies, the most well known being JavaScript (Netscape) and JScript (Microsoft). The language was invented by Brendan Eich at Netscape and first appeared in that company's Navigator 2.0 browser.
+        It has appeared in all subsequent browsers from Netscape and in all browsers from Microsoft starting with Internet Explorer 3.0. The development of this Standard started in November 1996. The first edition of this Ecma Standard was adopted by the
+        Ecma General Assembly of June 1997.</p>
+
+        <p>That Ecma Standard was submitted to ISO/IEC JTC 1 for adoption under the fast-track procedure, and approved as international standard ISO/IEC 16262, in April 1998. The Ecma General Assembly of June 1998 approved the second edition of ECMA-262 to keep
+        it fully aligned with ISO/IEC 16262. Changes between the first and the second edition are editorial in nature.</p>
+
+        <p>The third edition of the Standard introduced powerful regular expressions, better string handling, new control statements, try/catch exception handling, tighter definition of errors, formatting for numeric output and minor changes in anticipation
+        of forthcoming internationalisation facilities and future language growth. The third edition of the ECMAScript standard was adopted by the Ecma General Assembly of December 1999 and published as ISO/IEC 16262:2002 in June 2002.</p>
+    </div>
+
+    <div id="field">
+    <img src="https://en.js.cx/clipart/ball.svg" id="ball"> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+    . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+    </div>
+
+    <div id="info" style="position: fixed; top: 10px; right: 10px; background: #eee; padding: 10px;">
+        Altura Total: <span id="total-height">0</span>px <br>
+        Posição Atual: <span id="current-scroll">0</span>px
+    </div>
+
+    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus repellendus nulla totam dolorum laboriosam impedit nihil ratione, ipsa ex porro, quo voluptatem obcaecati exercitationem minus atque animi? Et, aliquid quos.</p>
+
+    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus repellendus nulla totam dolorum laboriosam impedit nihil ratione, ipsa ex porro, quo voluptatem obcaecati exercitationem minus atque animi? Et, aliquid quos.</p>
+
+    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus repellendus nulla totam dolorum laboriosam impedit nihil ratione, ipsa ex porro, quo voluptatem obcaecati exercitationem minus atque animi? Et, aliquid quos.</p>
+
+    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus repellendus nulla totam dolorum laboriosam impedit nihil ratione, ipsa ex porro, quo voluptatem obcaecati exercitationem minus atque animi? Et, aliquid quos.</p>
+
+    <button id="btnTop" style="position: fixed; bottom: 20px; display: none;">Voltar ao Topo</button>
+
+    <button onclick="go()">Click me</button>
+
+    <ul id="lista-posts"></ul>
+
+<h2 class="fancy-titles"> ⏺ Buttons hiding text and themselves </h2>
+
+    <div style="display: grid; grid: auto / auto">
+      <div><input type="button" id="hider" value="Click to hide the text" style="margin-bottom: 1rem;"/></div>
+      <div id="text">Text</div>
+    </div>
+    <input type="button" id="shybutton" value="Click to hide this button" style="margin-top: 1rem; margin-bottom: 1rem;"/>
+
+<h2 class="fancy-titles"> ⏺ Interactive dropdown </h2>
+
+    <div style="margin-top: 20px; margin-bottom: 20px;">
+      <div id="toggler"><span id="arrow-toggler">▶</span> Sweeties (click me)!</div>
+      <ul id="toggle-list" hidden="true">
+        <li>Cake</li>
+        <li>Donut</li>
+        <li>Honey</li>
+      </ul>
+    </div>
+
+<h2 class="fancy-titles"> ⏺ Removing elements with a button </h2>
+
+  <div>
+    <div class="pane">
+      <h3>Horse</h3>
+      <button class="remove-button"">[x]</button>
+      <p>The horse is one of two extant subspecies of Equus ferus. It is an odd-toed ungulate mammal belonging to the taxonomic family Equidae. The horse has evolved over the past 45 to 55 million years from a small multi-toed creature, Eohippus, into the large, single-toed animal of today.</p>
+    </div>
+    <div class="pane">
+      <h3>Donkey</h3>
+      <button class="remove-button">[x]</button>
+      <p>The donkey or ass (Equus africanus asinus) is a domesticated member of the horse family, Equidae. The wild ancestor of the donkey is the African wild ass, E. africanus. The donkey has been used as a working animal for at least 5000 years.</p>
+    </div>
+    <div class="pane">
+      <h3>Cat</h3>
+      <button class="remove-button">[x]</button>
+      <p>The domestic cat (Latin: Felis catus) is a small, typically furry, carnivorous mammal. They are often called house cats when kept as indoor pets or simply cats when there is no need to distinguish them from other felids and felines. Cats are often valued by humans for companionship and for their ability to hunt vermin.
+      </p>
+    </div>
+  </div>
+
+<h2 class="fancy-titles"> ⏺ Carousel </h2>
+
+
+
+
+    <script src="src/testing.js"></script>
+
+      
+
+  </body>
+</html>
