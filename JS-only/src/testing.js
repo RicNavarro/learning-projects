@@ -103,3 +103,23 @@ function deleteBlock(clickingEvent){
 /* ------------------------------------------------------------------------------- */
 
 
+const carousel = document.getElementById('emoji-carousel');
+const list = carousel.querySelector('ul');
+const listElems = carousel.querySelectorAll('li');
+
+let width = 130;
+let count = 3;
+let position = 0;
+
+document.getElementById('arrow-previous').onclick = function() {
+  position += width * count;
+  position = Math.min(position, 0);
+  list.style.marginLeft = position + 'px';
+};
+
+document.getElementById('arrow-next').onclick = function() {
+  position -= width * count;
+  let maxScroll = -width * (listElems.length - count);
+  position = Math.max(position, maxScroll);
+  list.style.marginLeft = position + 'px';
+};

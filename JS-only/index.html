@@ -16,6 +16,7 @@
         overflow: auto;
     }
     #field {
+      margin-top: 1rem;
       width: 200px;
       border: 10px groove black;
       background-color: #00FF00;
@@ -88,11 +89,52 @@
       margin-bottom: 2rem;
       font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     }
+
+    .carousel-shown-items {
+      width: 390px;
+      overflow: hidden; 
+    }
+
+    ul.carousel-images {
+      display: flex;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      transition: margin-left 250ms ease-in-out;
+    }
+
+    ul.carousel-images img {
+      width: 130px;
+      height: 130px;
+      display: block;
+    }
+
+    .carousel-container {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background-color: #343434;
+      padding: 1rem;
+      border-radius: 1rem;
+      width: fit-content;
+      border: 1px solid #ccc;
+
+    }
+
+    .arrow {
+      cursor: pointer;
+      padding: 5px 10px;
+      font-size: 20px;
+    }
+
     </style>
     
 </head>
 <body>
-    <div id="example">
+
+<h2 class="fancy-titles"> ⏺ Scrollable window </h2>
+
+  <div id="example">
         <h3>Introduction</h3>
     
         <p>This Ecma Standard is based on several originating technologies, the most well known being JavaScript (Netscape) and JScript (Microsoft). The language was invented by Brendan Eich at Netscape and first appeared in that company's Navigator 2.0 browser.
@@ -106,6 +148,8 @@
         of forthcoming internationalisation facilities and future language growth. The third edition of the ECMAScript standard was adopted by the Ecma General Assembly of December 1999 and published as ISO/IEC 16262:2002 in June 2002.</p>
     </div>
 
+<h2 class="fancy-titles"> ⏺ Interactive grid </h2>
+
     <div id="field">
     <img src="https://en.js.cx/clipart/ball.svg" id="ball"> . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
     . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
@@ -116,19 +160,6 @@
         Posição Atual: <span id="current-scroll">0</span>px
     </div>
 
-    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus repellendus nulla totam dolorum laboriosam impedit nihil ratione, ipsa ex porro, quo voluptatem obcaecati exercitationem minus atque animi? Et, aliquid quos.</p>
-
-    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus repellendus nulla totam dolorum laboriosam impedit nihil ratione, ipsa ex porro, quo voluptatem obcaecati exercitationem minus atque animi? Et, aliquid quos.</p>
-
-    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus repellendus nulla totam dolorum laboriosam impedit nihil ratione, ipsa ex porro, quo voluptatem obcaecati exercitationem minus atque animi? Et, aliquid quos.</p>
-
-    <p>Lorem ipsum dolor sit, amet consectetur adipisicing elit. Natus repellendus nulla totam dolorum laboriosam impedit nihil ratione, ipsa ex porro, quo voluptatem obcaecati exercitationem minus atque animi? Et, aliquid quos.</p>
-
-    <button id="btnTop" style="position: fixed; bottom: 20px; display: none;">Voltar ao Topo</button>
-
-    <button onclick="go()">Click me</button>
-
-    <ul id="lista-posts"></ul>
 
 <h2 class="fancy-titles"> ⏺ Buttons hiding text and themselves </h2>
 
@@ -172,7 +203,27 @@
 
 <h2 class="fancy-titles"> ⏺ Carousel </h2>
 
+<div class="carousel-container" id="emoji-carousel">
 
+  <div class="carousle-arrow"><button class="arrow" id="arrow-previous">⇦</button></div>
+  <div class="carousel-shown-items">
+
+    <ul class="carousel-images">
+      <li class="carousel-item"><img src="https://en.js.cx/carousel/1.png"></li>
+      <li class="carousel-item"><img src="https://en.js.cx/carousel/2.png"></li>
+      <li class="carousel-item"><img src="https://en.js.cx/carousel/3.png"></li>
+      <li class="carousel-item"><img src="https://en.js.cx/carousel/4.png"></li>
+      <li class="carousel-item"><img src="https://en.js.cx/carousel/5.png"></li>
+      <li class="carousel-item"><img src="https://en.js.cx/carousel/6.png"></li>
+      <li class="carousel-item"><img src="https://en.js.cx/carousel/7.png"></li>
+      <li class="carousel-item"><img src="https://en.js.cx/carousel/8.png"></li>
+      <li class="carousel-item"><img src="https://en.js.cx/carousel/9.png"></li>
+      <li class="carousel-item"><img src="https://en.js.cx/carousel/10.png"></li>
+    </ul>
+
+  </div>
+  <div class="carousle-arrow"><button class="arrow" id="arrow-next">⇨</button>
+</div> 
 
 
     <script src="src/testing.js"></script>
