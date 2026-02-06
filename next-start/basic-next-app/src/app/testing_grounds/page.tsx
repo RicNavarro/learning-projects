@@ -3,11 +3,15 @@
 import { useState } from "react";
 import {sculptureList} from "./carousel_data"
 
+const blackButtonStyle = "rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px] cursor-pointe"
+
+
 export default function TestingGrounds() {
     
+    /* A1: "Carrossel" usando state (mas sem transições, só com trocas de imagem)*/
+
     const [index, setIndex] = useState(0);
     const [showMore, setShowMore] = useState(false);
-
     function handleNextClick() {
         
         if (index == (sculptureList.length - 1))
@@ -20,14 +24,74 @@ export default function TestingGrounds() {
         setShowMore(!showMore);
     }
 
-    const blackButtonStyle = "rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px] cursor-pointe"
-
     let sculpture = sculptureList[index];
+
+    /* A2: Caixa de texto que modifica o conteúdo escrito conforme a inserção ocorre */
+
+    const [firstName, setFirstName] = useState('')
+    const [lastName, setLastName] = useState('')
+
+    function handleFirstNameChange(e) {
+        setFirstName(e.target.value);
+    }
+
+    function handleLastNameChange(e) {
+        setLastName(e.target.value);
+    }
+
+    function handleReset() {
+        setFirstName('');
+        setLastName('');
+    }
+
+    /* A3: Checklist*/
+
+    const [tasks, setTasks] = useState([]);
+    const [inputValue, setInputValue] = useState("");
+    const [editandoId, setEditandoId] = useState(null);
+    const [textoEdicao, setTextoEdicao] = useState("");
+
+
+    const adicionarTarefa = () => {
+        if (!inputValue.trim()) return;
+        
+        const novaTarefa = {
+            id: Date.now(),
+            text: inputValue,
+            completed: false
+        };
+
+        setTasks([
+            ...tasks,
+            novaTarefa
+        ]);
+        setInputValue("")
+    };
+
+    const alternarStatus = (id) => {
+        setTasks(tasks.map(task => 
+            task.id === id ? {
+                ...task,
+                completed: !task.completed
+            } : task
+        ));
+    };
+
+    const salvarEdicao = (id) => {
+    
+    };
+
+    const removerTarefa = (id) => {
+        // TODO: Usar .filter()
+    };
+
     return (
     <main className="min-h-screen m-8">
 
         <h1 className="text-5xl">React Testing Grounds</h1>
         <p className="mt-5">Zona de testes e aprendizado em react.</p>
+
+        {/*         A1      */}
 
         <div className="mt-10">
             <button onClick={handleNextClick} className={blackButtonStyle + " my-4"}>
@@ -51,6 +115,58 @@ export default function TestingGrounds() {
             />
         </div>
 
+        {/*         A2      */}
+
+        <div className="my-6">
+            <form onSubmit={e => e.preventDefault()}>
+            <input
+                placeholder="First name"
+                className="rounded-lg px-2 py-1 mr-3 outline-2 outline-white-500/100"
+                value={firstName}
+                onChange={handleFirstNameChange}
+            />
+            <input
+                placeholder="Last name"
+                className="rounded-lg px-2 py-1 mr-3 outline-2 outline-white-500/100"
+                value={lastName}
+                onChange={handleLastNameChange}
+            />
+            <h1 className="my-2 text-2xl">Hi, {firstName} {lastName}</h1>
+            <button className={blackButtonStyle} onClick={handleReset}>Reset</button>
+            </form>
+        </div>
+        
+        {/*         A3      */}
+
+        <div className="w-150 p-4 rounded-md outline-2 outline-gray-500/30">
+            <h2 className="text-xl my-2">Minha Checklist</h2>
+            <input 
+                className=" my-2 mr-3 px-2 py-1 rounded-lg outline-2 outline-blue-500/70"
+                value={inputValue} 
+                onChange={(e) => setInputValue(e.target.value)} 
+                placeholder="Nova tarefa..."
+            />
+            <button className={blackButtonStyle} onClick={() => adicionarTarefa()}>Adicionar</button>
+
+            <ul>
+                {tasks.map(task => (
+                <li key={task.id} className="my-4" style={{ textDecoration: task.completed ? 'line-through' : 'none' }}>
+                    <input
+                        type="checkbox"
+                        onChange={
+                            e => {
+                                alternarStatus()
+                            }
+                        }
+                        className= "mr-2"
+                    />
+                    {task.text}
+                    <button className="text-sm ml-3 px-3 py-1 outline-1 rounded-md cursor-pointer hover:bg-white/[.1] transition-colors" onClick={() => salvarEdicao(task.id)}>Editar</button>
+                    <button className="text-sm mx-3 px-3 py-1 outline-1 rounded-md cursor-pointer hover:bg-white/[.1] transition-colors" onClick={() => removerTarefa(task.id)}>Deletar</button>
+                </li>
+                ))}
+            </ul>
+        </div>
 
 
     </main>
