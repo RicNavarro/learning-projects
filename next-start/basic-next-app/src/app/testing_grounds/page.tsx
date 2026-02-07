@@ -46,7 +46,13 @@ export default function TestingGrounds() {
 
     /* A3: Checklist*/
 
-    const [tasks, setTasks] = useState([]);
+    interface Task{
+        id: number;
+        text: string;
+        completed: boolean;
+    }
+
+    const [tasks, setTasks] = useState<Task[]>([]);
     const [inputValue, setInputValue] = useState("");
     const [editandoId, setEditandoId] = useState(null);
     const [textoEdicao, setTextoEdicao] = useState("");
@@ -68,7 +74,7 @@ export default function TestingGrounds() {
         setInputValue("")
     };
 
-    const alternarStatus = (id) => {
+    const alternarStatus = (id : number) => {
         setTasks(tasks.map(task => 
             task.id === id ? {
                 ...task,
@@ -77,12 +83,19 @@ export default function TestingGrounds() {
         ));
     };
 
-    const salvarEdicao = (id) => {
-    
+
+    const salvarEdicao = (id : number) => {
+        setTasks(tasks.map(task => 
+            task.id === id ? {
+                ...task,
+                text: textoEdicao
+            } : task
+        ))
+        setEditandoId(null);
     };
 
-    const removerTarefa = (id) => {
-        // TODO: Usar .filter()
+    const removerTarefa = (id : number) => {
+        setTasks(tasks.filter(task => task.id !== id ))
     };
 
     return (
@@ -93,8 +106,8 @@ export default function TestingGrounds() {
 
         {/*         A1      */}
 
-        <div className="mt-10">
-            <button onClick={handleNextClick} className={blackButtonStyle + " my-4"}>
+        <div className="mt-10 w-150 p-4 rounded-md outline-2 outline-gray-500/30">
+            <button onClick={handleNextClick} className={blackButtonStyle + " mb-4 mt-2"}>
                 Next
             </button>
             <h2 className="text-3xl bold">
@@ -117,7 +130,7 @@ export default function TestingGrounds() {
 
         {/*         A2      */}
 
-        <div className="my-6">
+        <div className="my-6 w-150 p-4 rounded-md outline-2 outline-gray-500/30">
             <form onSubmit={e => e.preventDefault()}>
             <input
                 placeholder="First name"
@@ -154,15 +167,37 @@ export default function TestingGrounds() {
                     <input
                         type="checkbox"
                         onChange={
-                            e => {
-                                alternarStatus()
+                            () => {
+                                alternarStatus(task.id)
                             }
                         }
                         className= "mr-2"
                     />
-                    {task.text}
-                    <button className="text-sm ml-3 px-3 py-1 outline-1 rounded-md cursor-pointer hover:bg-white/[.1] transition-colors" onClick={() => salvarEdicao(task.id)}>Editar</button>
-                    <button className="text-sm mx-3 px-3 py-1 outline-1 rounded-md cursor-pointer hover:bg-white/[.1] transition-colors" onClick={() => removerTarefa(task.id)}>Deletar</button>
+                    {editandoId === task.id ? (
+                        <>
+                        <input
+                            type="text"
+                            className="rounded-md px-2 py-1 bg-gray-800"
+                            value={textoEdicao}
+                            onChange={(e) => setTextoEdicao(e.target.value)}
+                        />
+                        <button className="text-sm ml-3 px-3 py-1 outline-1 rounded-md cursor-pointer hover:bg-white/[.1] transition-colors"
+                                onClick={() => salvarEdicao(task.id)}>Salvar</button>
+                        </>
+                    ):(
+                        <>
+                        {task.text}
+                        <button className="text-sm ml-3 px-3 py-1 outline-1 rounded-md cursor-pointer hover:bg-white/[.1] transition-colors"
+                                onClick={() => {
+                                    setEditandoId(task.id);
+                                    setTextoEdicao(task.text)}}
+                                >
+                                Editar
+                        </button>
+                        </>
+                    )}
+                    <button className="text-sm mx-3 px-3 py-1 outline-1 rounded-md cursor-pointer hover:bg-white/[.1] transition-colors"
+                        onClick={() => removerTarefa(task.id)}>Deletar</button>
                 </li>
                 ))}
             </ul>
