@@ -1,6 +1,6 @@
 "use client"
 
-import { useState } from "react";
+import { ChangeEvent, useState } from "react";
 import {sculptureList} from "./carousel_data"
 
 const blackButtonStyle = "rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px] cursor-pointe"
@@ -17,7 +17,7 @@ export default function TestingGrounds() {
         if (index == (sculptureList.length - 1))
             setIndex(0)
         else
-            setIndex(index + 1);
+            setIndex(index => index + 1);
     }
 
     function handleMoreClick() {
@@ -31,11 +31,11 @@ export default function TestingGrounds() {
     const [firstName, setFirstName] = useState('')
     const [lastName, setLastName] = useState('')
 
-    function handleFirstNameChange(e) {
+    function handleFirstNameChange(e: ChangeEvent<HTMLInputElement>) {
         setFirstName(e.target.value);
     }
 
-    function handleLastNameChange(e) {
+    function handleLastNameChange(e: ChangeEvent<HTMLInputElement>) {
         setLastName(e.target.value);
     }
 
