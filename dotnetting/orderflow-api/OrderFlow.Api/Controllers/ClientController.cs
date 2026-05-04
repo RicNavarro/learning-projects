@@ -1,5 +1,6 @@
 using Microsoft.AspNetCore.Mvc;
 using OrderFlow.Api.Models;
+using OrderFlow.Api.Services;
 
 namespace OrderFlow.Api.Controllers{
 
@@ -7,20 +8,20 @@ namespace OrderFlow.Api.Controllers{
     [Route("api/[controller]")]
     public class ClientController : ControllerBase{
 
-        private static List<Client> clients = new List<Client>();
+        private readonly ClientService _service;
+
+        // O Controller pede o Service para o .NET
+        public ClientController(ClientService service)
+        {
+            _service = service;
+        }
+
 
         [HttpGet]
         public IActionResult GetClients(){
-
-            //var clients = new List<string>
-            //{
-            //    "Ricardo",
-            //    "Jayane",
-            //    "Yelena"
-            //};
-
-            return Ok(clients);
+            return Ok(_service.GetAll());
         }
+
 
         [HttpPost]
         public IActionResult CreateClient(Client client){
@@ -28,10 +29,8 @@ namespace OrderFlow.Api.Controllers{
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);
 
-            client.Id = clients.Count + 1;
-            clients.Add(client);
-
-            return Created("", client);
+            var created = _service.Create(client);
+            return Created("", created);
         }
 
 
