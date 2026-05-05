@@ -13,5 +13,7 @@ namespace OrderFlow.Api.Models
         [Required]
         [EmailAddress]
         public string Email { get; set; } = string.Empty;
+
+        public List<Order> Orders { get; set; }
     }
 }
