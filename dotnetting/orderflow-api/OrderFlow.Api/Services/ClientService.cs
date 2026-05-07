@@ -3,6 +3,8 @@ using OrderFlow.Api.Models;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.EntityFrameworkCore;
+using OrderFlow.Api.DTOs.Requests;
+using OrderFlow.Api.DTOs.Responses;
 
 namespace OrderFlow.Api.Services
 {
@@ -16,26 +18,47 @@ namespace OrderFlow.Api.Services
             _context = context;
         }
 
-        public List<Client> GetAll()
+        public List<ClientResponse> GetAll()
         {
             // O EF Core busca no banco e transforma em lista
             return _context.Clients
                 .Include(c => c.Orders)
+                .Select(c => MapToResponse(c))
                 .ToList();
         }
 
-        public Client Create(Client client)
+        public ClientResponse Create(Client client)
         {
             _context.Clients.Add(client); // Prepara o INSERT
             _context.SaveChanges();      // Executa no SQL Server
-            return client;
+            return MapToResponse(client);
         }
 
-        public Client GetWithOrders(int id)
+        public ClientResponse GetWithOrders(int id)
         {
-            return _context.Clients
+            var client = _context.Clients
                 .Include(c => c.Orders)
                 .FirstOrDefault(c => c.Id == id);
+
+            if (client == null)
+                throw new KeyNotFoundException($"Cliente {id} não encontrado.");
+
+            return MapToResponse(client);
+        }
+
+        private static ClientResponse MapToResponse(Client client)
+        {
+            return new ClientResponse
+            {
+                Id = client.Id,
+                Name = client.Name,
+                Orders = client.Orders.Select(o => new OrderResponse
+                {
+                    Id = o.Id,
+                    Description = o.Description,
+                    ClientId = o.ClientId
+                }).ToList()
+            };
         }
     }
 }
