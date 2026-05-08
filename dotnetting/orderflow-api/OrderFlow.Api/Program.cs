@@ -1,6 +1,7 @@
 using OrderFlow.Api.Data;
 using Microsoft.EntityFrameworkCore;
 using OrderFlow.Api.Services;
+using OrderFlow.Api.Services.Interfaces;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -12,8 +13,8 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
 // Dependency Injection (DI)
-builder.Services.AddScoped<ClientService>();
-builder.Services.AddScoped<OrderService>();
+builder.Services.AddScoped<IClientService, ClientService>();
+builder.Services.AddScoped<IOrderService, OrderService>();
 
 // Banco
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));

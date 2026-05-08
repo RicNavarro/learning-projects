@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using OrderFlow.Api.Models;
 using OrderFlow.Api.Services;
 using OrderFlow.Api.DTOs.Requests;
+using OrderFlow.Api.Services.Interfaces;
 
 namespace OrderFlow.Api.Controllers
 {
@@ -9,9 +10,9 @@ namespace OrderFlow.Api.Controllers
     [Route("api/[controller]")]
     public class OrdersController : ControllerBase
     {
-        private readonly OrderService _service;
+        private readonly IOrderService _service;
 
-        public OrdersController(OrderService service)
+        public OrdersController(IOrderService service)
         {
             _service = service;
         }

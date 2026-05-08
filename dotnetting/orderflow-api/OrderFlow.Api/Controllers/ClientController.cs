@@ -1,6 +1,8 @@
 using Microsoft.AspNetCore.Mvc;
 using OrderFlow.Api.Models;
 using OrderFlow.Api.Services;
+using OrderFlow.Api.DTOs.Requests;
+using OrderFlow.Api.Services.Interfaces;
 
 namespace OrderFlow.Api.Controllers{
 
@@ -8,10 +10,10 @@ namespace OrderFlow.Api.Controllers{
     [Route("api/[controller]")]
     public class ClientController : ControllerBase{
 
-        private readonly ClientService _service;
+        private readonly IClientService _service;
 
         // O Controller pede o Service para o .NET
-        public ClientController(ClientService service)
+        public ClientController(IClientService service)
         {
             _service = service;
         }
@@ -24,7 +26,7 @@ namespace OrderFlow.Api.Controllers{
 
 
         [HttpPost]
-        public IActionResult CreateClient(Client client){
+        public IActionResult CreateClient(CreateClientRequest client){
 
             if (!ModelState.IsValid)
                 return BadRequest(ModelState);

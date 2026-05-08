@@ -2,10 +2,11 @@ using OrderFlow.Api.Data;
 using OrderFlow.Api.Models;
 using OrderFlow.Api.DTOs.Requests;
 using OrderFlow.Api.DTOs.Responses;
+using OrderFlow.Api.Services.Interfaces;
 
 namespace OrderFlow.Api.Services
 {
-    public class OrderService
+    public class OrderService : IOrderService
     {
         private readonly AppDbContext _context;
 

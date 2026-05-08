@@ -5,10 +5,11 @@ using System.Linq;
 using Microsoft.EntityFrameworkCore;
 using OrderFlow.Api.DTOs.Requests;
 using OrderFlow.Api.DTOs.Responses;
+using OrderFlow.Api.Services.Interfaces;
 
 namespace OrderFlow.Api.Services
 {
-    public class ClientService
+    public class ClientService : IClientService
     {
         private readonly AppDbContext _context;
 
@@ -27,8 +28,14 @@ namespace OrderFlow.Api.Services
                 .ToList();
         }
 
-        public ClientResponse Create(Client client)
+        public ClientResponse Create(CreateClientRequest request)
         {
+
+            var client = new Client
+            {
+                Name = request.Name
+            };
+
             _context.Clients.Add(client); // Prepara o INSERT
             _context.SaveChanges();      // Executa no SQL Server
             return MapToResponse(client);
