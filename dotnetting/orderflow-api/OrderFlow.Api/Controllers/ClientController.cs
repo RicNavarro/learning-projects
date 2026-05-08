@@ -12,7 +12,6 @@ namespace OrderFlow.Api.Controllers{
 
         private readonly IClientService _service;
 
-        // O Controller pede o Service para o .NET
         public ClientController(IClientService service)
         {
             _service = service;
@@ -32,9 +31,11 @@ namespace OrderFlow.Api.Controllers{
                 return BadRequest(ModelState);
 
             var created = _service.Create(client);
-            return Created("", created);
+            return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         }
 
+        [HttpGet("{id}")]
+        public IActionResult GetById(int id) => Ok(_service.GetWithOrders(id));
 
     }
 }

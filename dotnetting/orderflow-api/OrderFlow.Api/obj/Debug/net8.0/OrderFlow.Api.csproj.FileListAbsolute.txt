@@ -169,3 +169,7 @@
 /home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/obj/Debug/net8.0/OrderFlow.Api.pdb
 /home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/obj/Debug/net8.0/OrderFlow.Api.genruntimeconfig.cache
 /home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/obj/Debug/net8.0/ref/OrderFlow.Api.dll
+/home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/bin/Debug/net8.0/FluentValidation.dll
+/home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/bin/Debug/net8.0/FluentValidation.DependencyInjectionExtensions.dll
+/home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/bin/Debug/net8.0/SharpGrip.FluentValidation.AutoValidation.Mvc.dll
+/home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/bin/Debug/net8.0/SharpGrip.FluentValidation.AutoValidation.Shared.dll

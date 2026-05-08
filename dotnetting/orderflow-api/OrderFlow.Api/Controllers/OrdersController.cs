@@ -31,12 +31,12 @@ namespace OrderFlow.Api.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var order = _service.GetById(id);
+    //        var order = _service.GetById(id);
 
-            if (order == null)
-                return NotFound();
+  //          if (order == null)
+//                return NotFound();
             
-            return Ok(order);
+            return Ok(_service.GetById(id));
         }
 
         // UPDATE

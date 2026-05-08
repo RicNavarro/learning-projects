@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "Y07kRJ3jA9LVz74Dc3Pm/X38hQp+ZHfRh28ssLnaqdUTp0XxRrtcFeoM7Umxc9ekqXnL0OB+Jnd+o4fsm68AiA==",
+  "dgSpecHash": "jL4ztmJp+no+ECIRp+Brg/ZPqi32KuUd7MNGVxEkyiRxFu2sPIZh49N1zmEGBa2xTxkeGQCourSEcQDnmQPs1Q==",
   "success": true,
   "projectFilePath": "/home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/OrderFlow.Api.csproj",
   "expectedPackageFiles": [
@@ -51,6 +51,8 @@
     "/home/ricardonavarro/.nuget/packages/microsoft.sqlserver.server/1.0.0/microsoft.sqlserver.server.1.0.0.nupkg.sha512",
     "/home/ricardonavarro/.nuget/packages/microsoft.win32.systemevents/6.0.0/microsoft.win32.systemevents.6.0.0.nupkg.sha512",
     "/home/ricardonavarro/.nuget/packages/mono.texttemplating/2.2.1/mono.texttemplating.2.2.1.nupkg.sha512",
+    "/home/ricardonavarro/.nuget/packages/sharpgrip.fluentvalidation.autovalidation.mvc/2.0.0/sharpgrip.fluentvalidation.autovalidation.mvc.2.0.0.nupkg.sha512",
+    "/home/ricardonavarro/.nuget/packages/sharpgrip.fluentvalidation.autovalidation.shared/2.0.0/sharpgrip.fluentvalidation.autovalidation.shared.2.0.0.nupkg.sha512",
     "/home/ricardonavarro/.nuget/packages/swashbuckle.aspnetcore/6.6.2/swashbuckle.aspnetcore.6.6.2.nupkg.sha512",
     "/home/ricardonavarro/.nuget/packages/swashbuckle.aspnetcore.swagger/6.6.2/swashbuckle.aspnetcore.swagger.6.6.2.nupkg.sha512",
     "/home/ricardonavarro/.nuget/packages/swashbuckle.aspnetcore.swaggergen/6.6.2/swashbuckle.aspnetcore.swaggergen.6.6.2.nupkg.sha512",

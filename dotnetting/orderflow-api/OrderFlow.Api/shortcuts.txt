@@ -1,0 +1,28 @@
+### GET ALL
+
+curl -X GET http://localhost:5130/api/client
+
+### GET one dude
+
+curl -X GET http://localhost:5130/api/client/1
+
+### CREATE one
+
+curl -X POST http://localhost:5130/api/orders -H "Content-Type: application/json" -d  '{"description": "Filminho", "clientId": 1}'
+
+### UPDATE one
+
+curl -X PUT http://localhost:5130/api/orders/3 -H "Content-Type: application/json" -d  '{"description": "Filmão", "clientId": 2}'
+
+### DELETE one
+
+curl -X DELETE http://localhost:5130/api/orders/3
+
+
+
+------------- Edite o comando aqui -------------------------------------
+
+
+
+
+------------------------------------------------------------------------

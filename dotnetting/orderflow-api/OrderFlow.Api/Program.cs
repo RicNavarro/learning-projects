@@ -1,7 +1,13 @@
 using OrderFlow.Api.Data;
 using Microsoft.EntityFrameworkCore;
+
 using OrderFlow.Api.Services;
+
 using OrderFlow.Api.Services.Interfaces;
+
+using FluentValidation;
+using OrderFlow.Api.DTOs.Validators;
+using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -19,6 +25,13 @@ builder.Services.AddScoped<IOrderService, OrderService>();
 // Banco
 builder.Services.AddDbContext<AppDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
+// Validadores
+builder.Services.AddValidatorsFromAssemblyContaining<CreateClientRequestValidator>();
+builder.Services.AddFluentValidationAutoValidation();
+
+// Relatório de erros
+builder.Services.AddProblemDetails();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -29,6 +42,8 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseExceptionHandler();
 
 app.MapControllers();
 
