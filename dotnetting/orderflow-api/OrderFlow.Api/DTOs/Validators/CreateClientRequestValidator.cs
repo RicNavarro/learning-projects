@@ -10,6 +10,10 @@ namespace OrderFlow.Api.DTOs.Validators
                 .NotEmpty().WithMessage("O nome do cliente é obrigatório.")
                 .MinimumLength(3).WithMessage("O nome deve ter pelo menos 3 caracteres.")
                 .MaximumLength(100).WithMessage("O nome não pode ultrapassar 100 caracteres.");
+
+            RuleFor(x => x.Email)
+                .NotEmpty()
+                .EmailAddress();
         }
 
     }

@@ -9,7 +9,7 @@ namespace OrderFlow.Api.Services.Interfaces
 
         ClientResponse Create(CreateClientRequest request);
 
-        ClientResponse GetWithOrders(int id);
+        ClientResponse? GetWithOrders(int id);
 
     }
 }

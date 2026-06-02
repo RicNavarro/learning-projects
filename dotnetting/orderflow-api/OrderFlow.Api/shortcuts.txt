@@ -22,7 +22,10 @@ curl -X DELETE http://localhost:5130/api/orders/3
 
 ------------- Edite o comando aqui -------------------------------------
 
+curl -X POST http://localhost:5130/api/client -H "Content-Type: application/json" -d  '{"name": "Ba"}'
 
+curl -X DELETE http://localhost:5130/api/client/2
 
+curl -X POST http://localhost:5130/api/orders -H "Content-Type: application/json" -d  '{"description": "Filminho", "clientId": 1}'
 
 ------------------------------------------------------------------------

@@ -31,12 +31,12 @@ namespace OrderFlow.Api.Controllers
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-    //        var order = _service.GetById(id);
+            var order = _service.GetById(id);
 
-  //          if (order == null)
-//                return NotFound();
+            if (order == null)
+                return NotFound();
             
-            return Ok(_service.GetById(id));
+            return Ok(order);
         }
 
         // UPDATE
@@ -44,6 +44,10 @@ namespace OrderFlow.Api.Controllers
         public IActionResult Update(int id, CreateOrderRequest request)
         {
             var updated = _service.Update(id, request);
+
+            if (updated == null)
+                return NotFound();
+
             return Ok(updated);
         }
 
@@ -51,7 +55,11 @@ namespace OrderFlow.Api.Controllers
         [HttpDelete("{id}")]
         public IActionResult Delete(int id)
         {
-            _service.Delete(id);
+            var deleted = _service.Delete(id);
+
+            if (!deleted)
+                return NotFound();
+
             return NoContent();
         }
 

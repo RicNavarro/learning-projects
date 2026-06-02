@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using OrderFlow.Api.DTOs.Requests;
 using OrderFlow.Api.DTOs.Responses;
 using OrderFlow.Api.Services.Interfaces;
+using OrderFlow.Api.Mappings;
 
 namespace OrderFlow.Api.Services
 {
@@ -24,7 +25,7 @@ namespace OrderFlow.Api.Services
             // O EF Core busca no banco e transforma em lista
             return _context.Clients
                 .Include(c => c.Orders)
-                .Select(c => MapToResponse(c))
+                .Select(c => c.ToResponse())
                 .ToList();
         }
 
@@ -33,12 +34,13 @@ namespace OrderFlow.Api.Services
 
             var client = new Client
             {
-                Name = request.Name
+                Name = request.Name,
+                Email = request.Email
             };
 
             _context.Clients.Add(client); // Prepara o INSERT
             _context.SaveChanges();      // Executa no SQL Server
-            return MapToResponse(client);
+            return client.ToResponse();
         }
 
         public ClientResponse GetWithOrders(int id)
@@ -48,24 +50,10 @@ namespace OrderFlow.Api.Services
                 .FirstOrDefault(c => c.Id == id);
 
             if (client == null)
-                throw new KeyNotFoundException($"Cliente {id} não encontrado.");
+                return null;
 
-            return MapToResponse(client);
+            return client.ToResponse();
         }
 
-        private static ClientResponse MapToResponse(Client client)
-        {
-            return new ClientResponse
-            {
-                Id = client.Id,
-                Name = client.Name,
-                Orders = client.Orders.Select(o => new OrderResponse
-                {
-                    Id = o.Id,
-                    Description = o.Description,
-                    ClientId = o.ClientId
-                }).ToList()
-            };
-        }
     }
 }

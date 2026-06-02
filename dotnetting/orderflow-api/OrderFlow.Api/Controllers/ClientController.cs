@@ -27,15 +27,19 @@ namespace OrderFlow.Api.Controllers{
         [HttpPost]
         public IActionResult CreateClient(CreateClientRequest client){
 
-            if (!ModelState.IsValid)
-                return BadRequest(ModelState);
-
             var created = _service.Create(client);
             return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
         }
 
         [HttpGet("{id}")]
-        public IActionResult GetById(int id) => Ok(_service.GetWithOrders(id));
+        public IActionResult GetById(int id)
+        {
+            var client = _service.GetWithOrders(id);
 
+            if (client == null)
+                return NotFound();
+
+            return Ok(client);
+        }
     }
 }

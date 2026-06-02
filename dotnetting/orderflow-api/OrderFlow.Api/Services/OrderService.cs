@@ -3,6 +3,7 @@ using OrderFlow.Api.Models;
 using OrderFlow.Api.DTOs.Requests;
 using OrderFlow.Api.DTOs.Responses;
 using OrderFlow.Api.Services.Interfaces;
+using OrderFlow.Api.Mappings;
 
 namespace OrderFlow.Api.Services
 {
@@ -36,7 +37,7 @@ namespace OrderFlow.Api.Services
             _context.Orders.Add(order);
             _context.SaveChanges();
 
-            return MapToResponse(order);
+            return order.ToResponse();
         }
 
 
@@ -53,7 +54,7 @@ namespace OrderFlow.Api.Services
                 return null;
         //        throw new KeyNotFoundException($"Pedido {id} não existe");
 
-            return MapToResponse(order);
+            return order.ToResponse();
         }
 
 
@@ -81,7 +82,7 @@ namespace OrderFlow.Api.Services
 
             _context.SaveChanges();
 
-            return MapToResponse(order);
+            return order.ToResponse();
         }
 
 
@@ -102,18 +103,6 @@ namespace OrderFlow.Api.Services
 
             return true;
         }
-
-
-        private static OrderResponse MapToResponse(Order order)
-        {
-            return new OrderResponse
-            {
-                Id = order.Id,
-                Description = order.Description,    
-                ClientId = order.ClientId
-            };
-        }
-
 
 
 
