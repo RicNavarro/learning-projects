@@ -32,6 +32,9 @@ builder.Services.AddFluentValidationAutoValidation();
 // Relatório de erros
 builder.Services.AddProblemDetails();
 
+// Autenticação
+builder.Services.AddScoped<IAuthService, AuthService>();
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
