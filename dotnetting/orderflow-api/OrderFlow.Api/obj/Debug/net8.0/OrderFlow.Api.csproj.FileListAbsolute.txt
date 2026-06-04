@@ -31,14 +31,6 @@
 /home/ricardonavarro/HDD/Files/Dev/Study/dotnetting/orderflow-api/OrderFlow.Api/obj/Debug/net8.0/OrderFlow.Api.pdb
 /home/ricardonavarro/HDD/Files/Dev/Study/dotnetting/orderflow-api/OrderFlow.Api/obj/Debug/net8.0/OrderFlow.Api.genruntimeconfig.cache
 /home/ricardonavarro/HDD/Files/Dev/Study/dotnetting/orderflow-api/OrderFlow.Api/obj/Debug/net8.0/ref/OrderFlow.Api.dll
-/home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/obj/Debug/net8.0/OrderFlow.Api.csproj.AssemblyReference.cache
-/home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/obj/Debug/net8.0/OrderFlow.Api.GeneratedMSBuildEditorConfig.editorconfig
-/home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/obj/Debug/net8.0/OrderFlow.Api.AssemblyInfoInputs.cache
-/home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/obj/Debug/net8.0/OrderFlow.Api.AssemblyInfo.cs
-/home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/obj/Debug/net8.0/OrderFlow.Api.csproj.CoreCompileInputs.cache
-/home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/obj/Debug/net8.0/OrderFlow.Api.MvcApplicationPartsAssemblyInfo.cs
-/home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/obj/Debug/net8.0/OrderFlow.Api.MvcApplicationPartsAssemblyInfo.cache
-/home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/obj/Debug/net8.0/OrderFlow.Api.sourcelink.json
 /home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/bin/Debug/net8.0/appsettings.Development.json
 /home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/bin/Debug/net8.0/appsettings.json
 /home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/bin/Debug/net8.0/OrderFlow.Api
@@ -51,6 +43,7 @@
 /home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/bin/Debug/net8.0/FluentValidation.dll
 /home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/bin/Debug/net8.0/FluentValidation.DependencyInjectionExtensions.dll
 /home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/bin/Debug/net8.0/Humanizer.dll
+/home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/bin/Debug/net8.0/Microsoft.AspNetCore.Authentication.JwtBearer.dll
 /home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/bin/Debug/net8.0/Microsoft.AspNetCore.OpenApi.dll
 /home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/bin/Debug/net8.0/Microsoft.Bcl.AsyncInterfaces.dll
 /home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/bin/Debug/net8.0/Microsoft.CodeAnalysis.dll
@@ -159,6 +152,14 @@
 /home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/bin/Debug/net8.0/runtimes/win/lib/net6.0/System.Runtime.Caching.dll
 /home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/bin/Debug/net8.0/runtimes/win/lib/net6.0/System.Security.Cryptography.ProtectedData.dll
 /home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/bin/Debug/net8.0/runtimes/win/lib/net6.0/System.Windows.Extensions.dll
+/home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/obj/Debug/net8.0/OrderFlow.Api.csproj.AssemblyReference.cache
+/home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/obj/Debug/net8.0/OrderFlow.Api.GeneratedMSBuildEditorConfig.editorconfig
+/home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/obj/Debug/net8.0/OrderFlow.Api.AssemblyInfoInputs.cache
+/home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/obj/Debug/net8.0/OrderFlow.Api.AssemblyInfo.cs
+/home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/obj/Debug/net8.0/OrderFlow.Api.csproj.CoreCompileInputs.cache
+/home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/obj/Debug/net8.0/OrderFlow.Api.MvcApplicationPartsAssemblyInfo.cs
+/home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/obj/Debug/net8.0/OrderFlow.Api.MvcApplicationPartsAssemblyInfo.cache
+/home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/obj/Debug/net8.0/OrderFlow.Api.sourcelink.json
 /home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/obj/Debug/net8.0/staticwebassets.build.json
 /home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/obj/Debug/net8.0/staticwebassets.development.json
 /home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/obj/Debug/net8.0/staticwebassets/msbuild.OrderFlow.Api.Microsoft.AspNetCore.StaticWebAssets.props

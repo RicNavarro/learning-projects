@@ -3,9 +3,11 @@ using OrderFlow.Api.Models;
 using OrderFlow.Api.Services;
 using OrderFlow.Api.DTOs.Requests;
 using OrderFlow.Api.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 
 namespace OrderFlow.Api.Controllers
 {
+    [Authorize]
     [ApiController]
     [Route("api/[controller]")]
     public class OrdersController : ControllerBase

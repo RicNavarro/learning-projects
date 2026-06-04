@@ -9,10 +9,43 @@ using FluentValidation;
 using OrderFlow.Api.DTOs.Validators;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
 
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.IdentityModel.Tokens;
+using System.Text;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Controllers
 builder.Services.AddControllers();
+
+var jwtKey = builder.Configuration["Jwt:Key"];
+
+// Seriço de autentição
+builder.Services
+    .AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
+    .AddJwtBearer(options =>
+    {
+        options.TokenValidationParameters =
+            new TokenValidationParameters
+            {
+                ValidateIssuer = true,
+                ValidateAudience = true,
+                ValidateLifetime = true,
+                ValidateIssuerSigningKey = true,
+
+                ValidIssuer = builder.Configuration["Jwt:Issuer"],
+
+                ValidAudience = builder.Configuration["Jwt:Audience"],
+
+                IssuerSigningKey =
+                    new SymmetricSecurityKey(
+                        Encoding.UTF8.GetBytes(jwtKey!)
+                    )
+            };
+    });
+
+// Autorização sucede a autenticação
+builder.Services.AddAuthorization();
 
 // Environment
 builder.Services.AddEndpointsApiExplorer();
@@ -35,6 +68,8 @@ builder.Services.AddProblemDetails();
 // Autenticação
 builder.Services.AddScoped<IAuthService, AuthService>();
 
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -47,6 +82,10 @@ if (app.Environment.IsDevelopment())
 app.UseHttpsRedirection();
 
 app.UseExceptionHandler();
+
+app.UseAuthentication();
+
+app.UseAuthorization();
 
 app.MapControllers();
 
