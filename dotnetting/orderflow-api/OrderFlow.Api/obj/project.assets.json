@@ -4346,11 +4346,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "/home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/OrderFlow.Api.csproj",
+      "projectUniqueName": "/home/ricardonavarro/HDD/Files/dev/study/learning/dotnetting/orderflow-api/OrderFlow.Api/OrderFlow.Api.csproj",
       "projectName": "OrderFlow.Api",
-      "projectPath": "/home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/OrderFlow.Api.csproj",
+      "projectPath": "/home/ricardonavarro/HDD/Files/dev/study/learning/dotnetting/orderflow-api/OrderFlow.Api/OrderFlow.Api.csproj",
       "packagesPath": "/home/ricardonavarro/.nuget/packages/",
-      "outputPath": "/home/ricardonavarro/HDD/Files/Dev/Study/Overall learning repo/learning-projects/dotnetting/orderflow-api/OrderFlow.Api/obj/",
+      "outputPath": "/home/ricardonavarro/HDD/Files/dev/study/learning/dotnetting/orderflow-api/OrderFlow.Api/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "/home/ricardonavarro/.nuget/NuGet/NuGet.Config"

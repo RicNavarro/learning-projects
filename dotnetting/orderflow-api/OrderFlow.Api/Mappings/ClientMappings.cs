@@ -11,6 +11,7 @@ namespace OrderFlow.Api.Mappings
             {
                 Id = client.Id,
                 Name = client.Name,
+                Email = client.Email,
                 Orders = client.Orders.Select(o => o.ToResponse())
                 .ToList()
             };

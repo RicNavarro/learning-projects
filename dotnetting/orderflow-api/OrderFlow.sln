@@ -1,0 +1,28 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.0.31903.59
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderFlow.Api", "OrderFlow.Api\OrderFlow.Api.csproj", "{77181C2D-05B9-4057-9750-077832DE2BB7}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OrderFlow.Tests", "OrderFlow.Tests\OrderFlow.Tests.csproj", "{C0AB20EC-C7A5-4CAA-9E42-9410F9AB8D51}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{77181C2D-05B9-4057-9750-077832DE2BB7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{77181C2D-05B9-4057-9750-077832DE2BB7}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{77181C2D-05B9-4057-9750-077832DE2BB7}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{77181C2D-05B9-4057-9750-077832DE2BB7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C0AB20EC-C7A5-4CAA-9E42-9410F9AB8D51}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C0AB20EC-C7A5-4CAA-9E42-9410F9AB8D51}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C0AB20EC-C7A5-4CAA-9E42-9410F9AB8D51}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C0AB20EC-C7A5-4CAA-9E42-9410F9AB8D51}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
