@@ -1,9 +1,11 @@
+using Moq;
 using FluentAssertions;
 using OrderFlow.Api.Data;
 using OrderFlow.Api.DTOs.Requests;
 using OrderFlow.Api.Models;
 using OrderFlow.Api.Services;
 using OrderFlow.Tests.Helpers;
+using OrderFlow.Api.Repositories.Interfaces;
 
 public class OrderServiceTests
 {
@@ -12,37 +14,32 @@ public class OrderServiceTests
     {
         // Arrange
 
-        var context = DbContextFactory.Create();
+        var repositoryMock = new Mock<IOrderRepository>();
 
-        var client = new Client
-        {
-            Name = "Ricardo",
-            Email = "ricardo@email.com"
-        };
+        repositoryMock.Setup(x => x.GetById(1)).Returns(
+            new Order
+            {
+                Id = 1,
+                Description = "Pedido Teste",
+                ClientId = 1
+            });
 
-        context.Clients.Add(client);
-        context.SaveChanges();
-
-        var order = new Order
-        {
-            Description = "Pedido Teste",
-            ClientId = client.Id
-        };
-
-        context.Orders.Add(order);
-        context.SaveChanges();
-
-        var service = new OrderService(context);
+        var service = new OrderService(repositoryMock.Object);
 
         // Act
 
-        var result = service.GetById(order.Id);
+        var result = service.GetById(1);
 
         // Assert
 
         result.Should().NotBeNull();
 
         result!.Description.Should().Be("Pedido Teste");
+
+        repositoryMock.Verify(
+            x => x.GetById(1),
+            Times.Once
+        );
     }
 
     [Fact]
@@ -50,9 +47,14 @@ public class OrderServiceTests
     {
         // Arrange
 
-        var context = DbContextFactory.Create();
+        //var context = DbContextFactory.Create();
+        var repositoryMock = new Mock<IOrderRepository>();
+        
+        repositoryMock.Setup
+            (x => x.GetById(999))
+            .Returns((Order?)null);
 
-        var service = new OrderService(context);
+        var service = new OrderService(repositoryMock.Object);
 
         // Act
 
@@ -61,6 +63,10 @@ public class OrderServiceTests
         // Assert
 
         result.Should().BeNull();
+
+        repositoryMock.Verify(
+            x => x.GetById(999),
+            Times.Once);
     }
 
     [Fact]
@@ -68,23 +74,19 @@ public class OrderServiceTests
     {
         // Arrange
 
-        var context = DbContextFactory.Create();
+        //var context = DbContextFactory.Create();
+        var repositoryMock = new Mock<IOrderRepository>();
 
-        var client = new Client
-        {
-            Name = "Ricardo",
-            Email = "ricardo@email.com"
-        };
+        repositoryMock
+            .Setup(x => x.ClientExists(1))
+            .Returns(true);
 
-        context.Clients.Add(client);
-        context.SaveChanges();
-
-        var service = new OrderService(context);
+        var service = new OrderService(repositoryMock.Object);
 
         var request = new CreateOrderRequest
         {
             Description = "Pedido Novo",
-            ClientId = client.Id
+            ClientId = 1
         };
 
         // Act
@@ -96,6 +98,14 @@ public class OrderServiceTests
         result.Should().NotBeNull();
 
         result.Description.Should().Be("Pedido Novo");
+
+        repositoryMock.Verify(
+            x => x.Add(It.IsAny<Order>()),
+            Times.Once);
+        
+        repositoryMock.Verify(
+           x => x.SaveChanges(),
+            Times.Once);
     }
 
     [Fact]
@@ -103,13 +113,19 @@ public class OrderServiceTests
     {
         // Arrange
 
-        var context = DbContextFactory.Create();
+        //var context = DbContextFactory.Create();
+        var repositoryMock = new Mock<IOrderRepository>();
 
-        var service = new OrderService(context);
+        repositoryMock
+            .Setup(x=>x.ClientExists(999))
+            .Returns(false);
 
-        var request = new CreateOrderRequest
+        var service = new OrderService(repositoryMock.Object);
+
+        var request =
+        new CreateOrderRequest
         {
-            Description = "Pedido Inválido",
+            Description = "Pedido Novo",
             ClientId = 999
         };
 
@@ -127,45 +143,53 @@ public class OrderServiceTests
     [Fact]
     public void Delete_ShouldReturnFalse_WhenOrderDoesNotExist()
     {
-        var context = DbContextFactory.Create();
+        //var context = DbContextFactory.Create();
+        var repositoryMock = new Mock<IOrderRepository>();
 
-        var service = new OrderService(context);
+        repositoryMock
+            .Setup(x=>x.Delete(999))
+            .Returns(false);
+
+        var service = new OrderService(repositoryMock.Object);
 
         var result = service.Delete(999);
 
         result.Should().BeFalse();
+        
+        repositoryMock.Verify(
+            x => x.Delete(999),
+            Times.Once);
     }
 
 
     [Fact]
     public void Delete_ShouldRemoveOrder()
     {
-        var context = DbContextFactory.Create();
 
-        var client = new Client
-        {
-            Name = "Ricardo",
-            Email = "ricardo@email.com"
-        };
+        //Arrange
+        //var context = DbContextFactory.Create();
+        var repositoryMock = new Mock<IOrderRepository>();
 
-        context.Clients.Add(client);
-        context.SaveChanges();
+        repositoryMock
+            .Setup(x=>x.Delete(1))
+            .Returns(true);
 
-        var order = new Order
-        {
-            Description = "Pedido",
-            ClientId = client.Id
-        };
+        var service = new OrderService(repositoryMock.Object);
 
-        context.Orders.Add(order);
-        context.SaveChanges();
+        //Act
 
-        var service = new OrderService(context);
+        var deleted = service.Delete(1);
 
-        var deleted = service.Delete(order.Id);
+        //Assert
 
         deleted.Should().BeTrue();
 
-        context.Orders.Count().Should().Be(0);
+        repositoryMock.Verify(
+            x => x.Delete(1),
+            Times.Once);
+
+        repositoryMock.Verify(
+            x => x.SaveChanges(),
+            Times.Once);
     }
 }

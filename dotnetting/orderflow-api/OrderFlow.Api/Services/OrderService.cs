@@ -4,16 +4,17 @@ using OrderFlow.Api.DTOs.Requests;
 using OrderFlow.Api.DTOs.Responses;
 using OrderFlow.Api.Services.Interfaces;
 using OrderFlow.Api.Mappings;
+using OrderFlow.Api.Repositories.Interfaces;
 
 namespace OrderFlow.Api.Services
 {
     public class OrderService : IOrderService
     {
-        private readonly AppDbContext _context;
+        private readonly IOrderRepository _repository;
 
-        public OrderService(AppDbContext context)
+        public OrderService(IOrderRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
 
@@ -23,7 +24,7 @@ namespace OrderFlow.Api.Services
         {
 
             //Validando se o cliente existe antes de criar o pedido
-            var clientExists = _context.Clients.Any(c => c.Id == request.ClientId);
+            var clientExists = _repository.ClientExists(request.ClientId);
             if (!clientExists)
                 throw new ArgumentException($"O cliente {request.ClientId} não existe");
 
@@ -34,8 +35,8 @@ namespace OrderFlow.Api.Services
                 ClientId = request.ClientId
             };
 
-            _context.Orders.Add(order);
-            _context.SaveChanges();
+            _repository.Add(order);
+            _repository.SaveChanges();
 
             return order.ToResponse();
         }
@@ -48,7 +49,7 @@ namespace OrderFlow.Api.Services
 
         public OrderResponse? GetById(int id)
         {
-            var order = _context.Orders.FirstOrDefault(o => o.Id == id);
+            var order = _repository.GetById(id);
 
             if (order == null)
                 return null;
@@ -66,13 +67,13 @@ namespace OrderFlow.Api.Services
         public OrderResponse? Update(int id, CreateOrderRequest request)
         {
 
-            var order = _context.Orders.FirstOrDefault(o => o.Id == id);
+            var order = _repository.GetById(id);
             if (order == null)
                 return null;
         //        throw new KeyNotFoundException($"Pedido {id} não existe");
 
 
-            var clientExists = _context.Clients.Any(c => c.Id == request.ClientId);
+            var clientExists = _repository.ClientExists(request.ClientId);
             if (!clientExists)
                 throw new ArgumentException($"O cliente {request.ClientId} não existe");
 
@@ -80,7 +81,7 @@ namespace OrderFlow.Api.Services
             order.Description = request.Description;
             order.ClientId = request.ClientId;
 
-            _context.SaveChanges();
+            _repository.SaveChanges();
 
             return order.ToResponse();
         }
@@ -92,14 +93,13 @@ namespace OrderFlow.Api.Services
 
         public bool Delete(int id)
         {
-            var order = _context.Orders.FirstOrDefault(o => o.Id == id);
+            var deleted = _repository.Delete(id);
 
-            if (order == null)
+            if (!deleted)
                 return false;
             //    throw new KeyNotFoundException($"Pedido {id} não existe");
 
-            _context.Orders.Remove(order);
-            _context.SaveChanges();
+            _repository.SaveChanges();
 
             return true;
         }

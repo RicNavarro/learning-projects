@@ -5,6 +5,9 @@ using OrderFlow.Api.Services;
 
 using OrderFlow.Api.Services.Interfaces;
 
+using OrderFlow.Api.Repositories;
+using OrderFlow.Api.Repositories.Interfaces;
+
 using FluentValidation;
 using OrderFlow.Api.DTOs.Validators;
 using SharpGrip.FluentValidation.AutoValidation.Mvc.Extensions;
@@ -68,6 +71,10 @@ builder.Services.AddProblemDetails();
 // Autenticação
 builder.Services.AddScoped<IAuthService, AuthService>();
 
+// Repositorios
+builder.Services.AddScoped<IOrderService, OrderService>();
+
+builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
 
 var app = builder.Build();

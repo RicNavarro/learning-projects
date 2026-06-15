@@ -43,7 +43,7 @@ namespace OrderFlow.Api.Services
             return client.ToResponse();
         }
 
-        public ClientResponse GetWithOrders(int id)
+        public ClientResponse? GetWithOrders(int id)
         {
             var client = _context.Clients
                 .Include(c => c.Orders)
