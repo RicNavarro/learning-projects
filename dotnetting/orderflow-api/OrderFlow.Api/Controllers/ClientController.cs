@@ -36,7 +36,7 @@ namespace OrderFlow.Api.Controllers{
         [HttpGet("{id}")]
         public IActionResult GetById(int id)
         {
-            var client = _service.GetWithOrders(id);
+            var client = _service.GetByIdWithOrders(id);
 
             if (client == null)
                 return NotFound();

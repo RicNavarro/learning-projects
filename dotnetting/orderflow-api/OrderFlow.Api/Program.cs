@@ -72,8 +72,7 @@ builder.Services.AddProblemDetails();
 builder.Services.AddScoped<IAuthService, AuthService>();
 
 // Repositorios
-builder.Services.AddScoped<IOrderService, OrderService>();
-
+builder.Services.AddScoped<IClientRepository, ClientRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
 

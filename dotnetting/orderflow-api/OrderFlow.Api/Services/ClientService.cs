@@ -6,25 +6,25 @@ using Microsoft.EntityFrameworkCore;
 using OrderFlow.Api.DTOs.Requests;
 using OrderFlow.Api.DTOs.Responses;
 using OrderFlow.Api.Services.Interfaces;
+using OrderFlow.Api.Repositories.Interfaces;
 using OrderFlow.Api.Mappings;
 
 namespace OrderFlow.Api.Services
 {
     public class ClientService : IClientService
     {
-        private readonly AppDbContext _context;
+        private readonly IClientRepository _repository;
 
         // O ASP.NET vai injetar o DbContext aqui automaticamente
-        public ClientService(AppDbContext context)
+        public ClientService(IClientRepository repository)
         {
-            _context = context;
+            _repository = repository;
         }
 
         public List<ClientResponse> GetAll()
         {
             // O EF Core busca no banco e transforma em lista
-            return _context.Clients
-                .Include(c => c.Orders)
+            return _repository.GetAll()
                 .Select(c => c.ToResponse())
                 .ToList();
         }
@@ -38,16 +38,14 @@ namespace OrderFlow.Api.Services
                 Email = request.Email
             };
 
-            _context.Clients.Add(client); // Prepara o INSERT
-            _context.SaveChanges();      // Executa no SQL Server
+            _repository.Add(client); // Prepara o INSERT
+            _repository.SaveChanges();      // Executa no SQL Server
             return client.ToResponse();
         }
 
-        public ClientResponse? GetWithOrders(int id)
+        public ClientResponse? GetByIdWithOrders(int id)
         {
-            var client = _context.Clients
-                .Include(c => c.Orders)
-                .FirstOrDefault(c => c.Id == id);
+            var client = _repository.GetByIdWithOrders(id);
 
             if (client == null)
                 return null;

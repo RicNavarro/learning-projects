@@ -1,8 +1,10 @@
+using Moq;
 using FluentAssertions;
 using OrderFlow.Api.DTOs.Requests;
 using OrderFlow.Api.Models;
 using OrderFlow.Api.Services;
 using OrderFlow.Tests.Helpers;
+using OrderFlow.Api.Repositories.Interfaces;
 
 namespace OrderFlow.Tests.Services;
 
@@ -13,9 +15,9 @@ public class ClientServiceTests
     {
         // Arrange
 
-        var context = DbContextFactory.Create();
+        var repositoryMock = new Mock<IClientRepository>();
 
-        var service = new ClientService(context);
+        var service = new ClientService(repositoryMock.Object);
 
         var request = new CreateClientRequest
         {
@@ -34,6 +36,14 @@ public class ClientServiceTests
         result.Name.Should().Be("Ricardo");
 
         result.Email.Should().Be("ricardo@email.com");
+
+        repositoryMock.Verify(
+            x => x.Add(It.IsAny<Client>()),
+            Times.Once);
+
+        repositoryMock.Verify(
+            x => x.SaveChanges(),
+            Times.Once);
     }
 
     [Fact]
@@ -41,21 +51,27 @@ public class ClientServiceTests
     {
         // Arrange
 
-        var context = DbContextFactory.Create();
+        var repositoryMock = new Mock<IClientRepository>();
 
-        var service = new ClientService(context);
-
-        service.Create(new CreateClientRequest
-        {
-            Name = "Ricardo",
-            Email = "ricardo@email.com"
-        });
-
-        service.Create(new CreateClientRequest
-        {
-            Name = "Jayane",
-            Email = "jayane@email.com"
-        });
+        repositoryMock
+            .Setup(x => x.GetAll())
+            .Returns(
+                new List<Client>
+                {
+                    new()
+                    {
+                        Name = "Ricardo",
+                        Email = "ricardo@email.com"
+                    },
+                    new()
+                    {
+                        Name = "Jayane",
+                        Email = "jayane@email.com"
+                    }
+                }
+            );
+        
+        var service = new ClientService(repositoryMock.Object);
 
         // Act
 
@@ -69,30 +85,36 @@ public class ClientServiceTests
             .Should()
             .Contain("Ricardo")
             .And.Contain("Jayane");
+
+        repositoryMock.Verify(
+            x => x.GetAll(),
+            Times.Once);
     }
     
     
     [Fact]
-    public void GetWithOrders_ShouldReturnCreatedClient()
+    public void GetByIdWithOrders_ShouldReturnCreatedClient()
     {
         // Arrange
 
-        var context = DbContextFactory.Create();
+        var repositoryMock = new Mock<IClientRepository>();
 
-        var client = new Client
-        {
-            Name = "Ricardo",
-            Email = "ricardo@email.com"
-        };
+        repositoryMock
+        .Setup(x => x.GetByIdWithOrders(1))
+        .Returns(
+            new Client
+            {
+                Id = 1,
+                Name = "Ricardo",
+                Email = "ricardo@email.com"
+            }
+        );
 
-        context.Clients.Add(client);
-        context.SaveChanges();
-
-        var service = new ClientService(context);
+        var service = new ClientService(repositoryMock.Object);
 
         // Act
 
-        var result = service.GetWithOrders(client.Id);
+        var result = service.GetByIdWithOrders(1);
 
         // Assert
 
@@ -101,5 +123,9 @@ public class ClientServiceTests
         result!.Name.Should().Be("Ricardo");
 
         result.Email.Should().Be("ricardo@email.com");
+
+        repositoryMock.Verify(
+            x => x.GetByIdWithOrders(1),
+            Times.Once);
     }
 }
