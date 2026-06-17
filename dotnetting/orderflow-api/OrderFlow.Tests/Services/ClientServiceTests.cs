@@ -11,7 +11,7 @@ namespace OrderFlow.Tests.Services;
 public class ClientServiceTests
 {
     [Fact]
-    public void Create_ShouldCreateClient()
+    public async Task Create_ShouldCreateClient()
     {
         // Arrange
 
@@ -27,7 +27,7 @@ public class ClientServiceTests
 
         // Act
 
-        var result = service.Create(request);
+        var result = await service.CreateAsync(request);
 
         // Assert
 
@@ -38,24 +38,24 @@ public class ClientServiceTests
         result.Email.Should().Be("ricardo@email.com");
 
         repositoryMock.Verify(
-            x => x.Add(It.IsAny<Client>()),
+            x => x.AddAsync(It.IsAny<Client>()),
             Times.Once);
 
         repositoryMock.Verify(
-            x => x.SaveChanges(),
+            x => x.SaveChangesAsync(),
             Times.Once);
     }
 
     [Fact]
-    public void GetAll_ShouldReturnCreatedClients()
+    public async Task GetAll_ShouldReturnCreatedClients()
     {
         // Arrange
 
         var repositoryMock = new Mock<IClientRepository>();
 
         repositoryMock
-            .Setup(x => x.GetAll())
-            .Returns(
+            .Setup(x => x.GetAllAsync())
+            .ReturnsAsync(
                 new List<Client>
                 {
                     new()
@@ -75,7 +75,7 @@ public class ClientServiceTests
 
         // Act
 
-        var clients = service.GetAll();
+        var clients = await service.GetAllAsync();
 
         // Assert
 
@@ -87,21 +87,21 @@ public class ClientServiceTests
             .And.Contain("Jayane");
 
         repositoryMock.Verify(
-            x => x.GetAll(),
+            x => x.GetAllAsync(),
             Times.Once);
     }
     
     
     [Fact]
-    public void GetByIdWithOrders_ShouldReturnCreatedClient()
+    public async Task GetByIdWithOrders_ShouldReturnCreatedClient()
     {
         // Arrange
 
         var repositoryMock = new Mock<IClientRepository>();
 
         repositoryMock
-        .Setup(x => x.GetByIdWithOrders(1))
-        .Returns(
+        .Setup(x => x.GetByIdWithOrdersAsync(1))
+        .ReturnsAsync(
             new Client
             {
                 Id = 1,
@@ -114,7 +114,7 @@ public class ClientServiceTests
 
         // Act
 
-        var result = service.GetByIdWithOrders(1);
+        var result = await service.GetByIdWithOrdersAsync(1);
 
         // Assert
 
@@ -125,7 +125,7 @@ public class ClientServiceTests
         result.Email.Should().Be("ricardo@email.com");
 
         repositoryMock.Verify(
-            x => x.GetByIdWithOrders(1),
+            x => x.GetByIdWithOrdersAsync(1),
             Times.Once);
     }
 }

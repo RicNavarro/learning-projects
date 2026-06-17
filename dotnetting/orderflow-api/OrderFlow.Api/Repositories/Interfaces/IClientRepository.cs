@@ -4,11 +4,11 @@ namespace OrderFlow.Api.Repositories.Interfaces;
 
 public interface IClientRepository
 {
-    List<Client> GetAll();
+    Task<List<Client>> GetAllAsync();
 
-    Client Add(Client client);
+    Task<Client> AddAsync(Client client);
 
-    Client? GetByIdWithOrders(int id);
+    Task<Client?> GetByIdWithOrdersAsync(int id);
 
-    void SaveChanges();
+    Task SaveChangesAsync();
 }

@@ -4,13 +4,13 @@ namespace OrderFlow.Api.Repositories.Interfaces;
 
 public interface IOrderRepository
 {
-    Order Add(Order order);
+    Task<Order> AddAsync(Order order);
 
-    Order? GetById(int id);
+    Task<Order?> GetByIdAsync(int id);
 
-    bool Delete(int id);
+    Task<bool> DeleteAsync(int id);
 
-    bool ClientExists(int clientId);
+    Task<bool> ClientExistsAsync(int clientId);
 
-    void SaveChanges();
+    Task SaveChangesAsync();
 }

@@ -11,7 +11,7 @@ namespace OrderFlow.Tests.Controllers;
 public class OrdersControllerTests
 {
     [Fact]
-    public void GetById_ShouldReturnOk_WhenOrderExists()
+    public async Task GetById_ShouldReturnOk_WhenOrderExists()
     {
         // Arrange
 
@@ -26,8 +26,8 @@ public class OrdersControllerTests
             new Mock<IOrderService>();
 
         serviceMock
-            .Setup(x => x.GetById(1))
-            .Returns(expectedOrder);
+            .Setup(x => x.GetByIdAsync(1))
+            .ReturnsAsync(expectedOrder);
 
         var controller =
             new OrdersController(
@@ -36,7 +36,7 @@ public class OrdersControllerTests
         // Act
 
         var result =
-            controller.GetById(1);
+            await controller.GetById(1);
 
         // Assert
 
@@ -56,44 +56,44 @@ public class OrdersControllerTests
         order.Description.Should().Be("Pedido Teste");
 
         serviceMock.Verify(
-            x => x.GetById(1),
+            x => x.GetByIdAsync(1),
             Times.Once);
 
     }
 
     [Fact]
-    public void GetById_ShouldReturnNotFound_WhenOrderDoesNotExist()
+    public async Task GetById_ShouldReturnNotFound_WhenOrderDoesNotExist()
     {
         var serviceMock =
             new Mock<IOrderService>();
 
         serviceMock
-            .Setup(x => x.GetById(999))
-            .Returns((OrderResponse?)null);
+            .Setup(x => x.GetByIdAsync(999))
+            .ReturnsAsync((OrderResponse?)null);
 
         var controller =
             new OrdersController(
                 serviceMock.Object);
 
         var result =
-            controller.GetById(999);
+            await controller.GetById(999);
 
         result.Should()
             .BeOfType<NotFoundResult>();
         
         serviceMock.Verify(
-            x => x.GetById(999),
+            x => x.GetByIdAsync(999),
             Times.Once);
     }
 
     [Fact]
-    public void Create_ShouldReturnCreatedAtAction(){
+    public async Task Create_ShouldReturnCreatedAtAction(){
 
         var serviceMock = new Mock<IOrderService>();
 
         serviceMock
-            .Setup(x => x.Create(It.IsAny<CreateOrderRequest>()))
-            .Returns(
+            .Setup(x => x.CreateAsync(It.IsAny<CreateOrderRequest>()))
+            .ReturnsAsync(
                 new OrderResponse
                 {
                     Id = 10,
@@ -108,7 +108,7 @@ public class OrdersControllerTests
             ClientId = 1
         };
 
-        var result = controller.Create(request);
+        var result = await controller.Create(request);
 
         // Assertion
 
@@ -128,19 +128,19 @@ public class OrdersControllerTests
         order.Description.Should().Be("Pedido Novo");
 
         serviceMock.Verify(
-            x => x.Create(It.IsAny<CreateOrderRequest>()),
+            x => x.CreateAsync(It.IsAny<CreateOrderRequest>()),
             Times.Once);
 
     }
 
     [Fact]
-    public void Delete_ShouldReturnNotFound_WhenOrderDoesNotExist(){
+    public async Task Delete_ShouldReturnNotFound_WhenOrderDoesNotExist(){
 
         var serviceMock = new Mock<IOrderService>();
 
         serviceMock
-            .Setup(x => x.Delete(1))
-            .Returns(false);
+            .Setup(x => x.DeleteAsync(1))
+            .ReturnsAsync(false);
 
         var controller =
             new OrdersController(
@@ -149,7 +149,7 @@ public class OrdersControllerTests
         
         //
 
-        var result = controller.Delete(1);
+        var result = await controller.Delete(1);
 
         //
 
@@ -157,19 +157,19 @@ public class OrdersControllerTests
             .BeOfType<NotFoundResult>();
 
         serviceMock.Verify(
-            x => x.Delete(1),
+            x => x.DeleteAsync(1),
             Times.Once);
 
     }
 
     [Fact]
-    public void Delete_ShouldReturnNoContent_WhenOrderExists(){
+    public async Task Delete_ShouldReturnNoContent_WhenOrderExists(){
 
         var serviceMock = new Mock<IOrderService>();
 
         serviceMock
-            .Setup(x => x.Delete(1))
-            .Returns(true);
+            .Setup(x => x.DeleteAsync(1))
+            .ReturnsAsync(true);
 
         var controller =
             new OrdersController(
@@ -178,7 +178,7 @@ public class OrdersControllerTests
         
         //
 
-        var result = controller.Delete(1);
+        var result = await controller.Delete(1);
 
         //
 
@@ -186,7 +186,7 @@ public class OrdersControllerTests
             .BeOfType<NoContentResult>();
 
         serviceMock.Verify(
-            x => x.Delete(1),
+            x => x.DeleteAsync(1),
             Times.Once);
 
 

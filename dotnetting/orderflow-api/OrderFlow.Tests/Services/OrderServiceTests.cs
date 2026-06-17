@@ -10,13 +10,13 @@ using OrderFlow.Api.Repositories.Interfaces;
 public class OrderServiceTests
 {
     [Fact]
-    public void GetById_ShouldReturnOrder()
+    public async Task GetById_ShouldReturnOrder()
     {
         // Arrange
 
         var repositoryMock = new Mock<IOrderRepository>();
 
-        repositoryMock.Setup(x => x.GetById(1)).Returns(
+        repositoryMock.Setup(x => x.GetByIdAsync(1)).ReturnsAsync(
             new Order
             {
                 Id = 1,
@@ -28,7 +28,7 @@ public class OrderServiceTests
 
         // Act
 
-        var result = service.GetById(1);
+        var result = await service.GetByIdAsync(1);
 
         // Assert
 
@@ -37,13 +37,13 @@ public class OrderServiceTests
         result!.Description.Should().Be("Pedido Teste");
 
         repositoryMock.Verify(
-            x => x.GetById(1),
+            x => x.GetByIdAsync(1),
             Times.Once
         );
     }
 
     [Fact]
-    public void GetById_ShouldReturnNull_WhenOrderDoesNotExist()
+    public async Task GetById_ShouldReturnNull_WhenOrderDoesNotExist()
     {
         // Arrange
 
@@ -51,26 +51,26 @@ public class OrderServiceTests
         var repositoryMock = new Mock<IOrderRepository>();
         
         repositoryMock.Setup
-            (x => x.GetById(999))
-            .Returns((Order?)null);
+            (x => x.GetByIdAsync(999))
+            .ReturnsAsync((Order?)null);
 
         var service = new OrderService(repositoryMock.Object);
 
         // Act
 
-        var result = service.GetById(999);
+        var result = await service.GetByIdAsync(999);
 
         // Assert
 
         result.Should().BeNull();
 
         repositoryMock.Verify(
-            x => x.GetById(999),
+            x => x.GetByIdAsync(999),
             Times.Once);
     }
 
     [Fact]
-    public void Create_ShouldCreateOrder()
+    public async Task Create_ShouldCreateOrder()
     {
         // Arrange
 
@@ -78,8 +78,8 @@ public class OrderServiceTests
         var repositoryMock = new Mock<IOrderRepository>();
 
         repositoryMock
-            .Setup(x => x.ClientExists(1))
-            .Returns(true);
+            .Setup(x => x.ClientExistsAsync(1))
+            .ReturnsAsync(true);
 
         var service = new OrderService(repositoryMock.Object);
 
@@ -91,7 +91,7 @@ public class OrderServiceTests
 
         // Act
 
-        var result = service.Create(request);
+        var result = await service.CreateAsync(request);
 
         // Assert
 
@@ -100,16 +100,16 @@ public class OrderServiceTests
         result.Description.Should().Be("Pedido Novo");
 
         repositoryMock.Verify(
-            x => x.Add(It.IsAny<Order>()),
+            x => x.AddAsync(It.IsAny<Order>()),
             Times.Once);
         
         repositoryMock.Verify(
-           x => x.SaveChanges(),
+           x => x.SaveChangesAsync(),
             Times.Once);
     }
 
     [Fact]
-    public void Create_ShouldThrowException_WhenClientDoesNotExist()
+    public async Task Create_ShouldThrowException_WhenClientDoesNotExist()
     {
         // Arrange
 
@@ -117,8 +117,8 @@ public class OrderServiceTests
         var repositoryMock = new Mock<IOrderRepository>();
 
         repositoryMock
-            .Setup(x=>x.ClientExists(999))
-            .Returns(false);
+            .Setup(x=>x.ClientExistsAsync(999))
+            .ReturnsAsync(false);
 
         var service = new OrderService(repositoryMock.Object);
 
@@ -131,39 +131,40 @@ public class OrderServiceTests
 
         // Act
 
-        Action action = () => service.Create(request);
+        Func<Task> action = async () =>
+            await service.CreateAsync(request);
 
         // Assert
 
-        action.Should()
-            .Throw<ArgumentException>()
-            .WithMessage("*não existe*");
+        await action.Should()
+            .ThrowAsync<ArgumentException>().
+            WithMessage("*não existe*");
     }
 
     [Fact]
-    public void Delete_ShouldReturnFalse_WhenOrderDoesNotExist()
+    public async Task Delete_ShouldReturnFalse_WhenOrderDoesNotExist()
     {
         //var context = DbContextFactory.Create();
         var repositoryMock = new Mock<IOrderRepository>();
 
         repositoryMock
-            .Setup(x=>x.Delete(999))
-            .Returns(false);
+            .Setup(x=>x.DeleteAsync(999))
+            .ReturnsAsync(false);
 
         var service = new OrderService(repositoryMock.Object);
 
-        var result = service.Delete(999);
+        var result = await service.DeleteAsync(999);
 
         result.Should().BeFalse();
         
         repositoryMock.Verify(
-            x => x.Delete(999),
+            x => x.DeleteAsync(999),
             Times.Once);
     }
 
 
     [Fact]
-    public void Delete_ShouldRemoveOrder()
+    public async Task Delete_ShouldRemoveOrder()
     {
 
         //Arrange
@@ -171,25 +172,25 @@ public class OrderServiceTests
         var repositoryMock = new Mock<IOrderRepository>();
 
         repositoryMock
-            .Setup(x=>x.Delete(1))
-            .Returns(true);
+            .Setup(x=>x.DeleteAsync(1))
+            .ReturnsAsync(true);
 
         var service = new OrderService(repositoryMock.Object);
 
         //Act
 
-        var deleted = service.Delete(1);
+        var deleted = await service.DeleteAsync(1);
 
         //Assert
 
         deleted.Should().BeTrue();
 
         repositoryMock.Verify(
-            x => x.Delete(1),
+            x => x.DeleteAsync(1),
             Times.Once);
 
         repositoryMock.Verify(
-            x => x.SaveChanges(),
+            x => x.SaveChangesAsync(),
             Times.Once);
     }
 }

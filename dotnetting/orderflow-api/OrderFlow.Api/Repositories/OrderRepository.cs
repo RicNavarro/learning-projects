@@ -1,3 +1,4 @@
+using Microsoft.EntityFrameworkCore;
 using OrderFlow.Api.Data;
 using OrderFlow.Api.Models;
 using OrderFlow.Api.Repositories.Interfaces;
@@ -13,30 +14,30 @@ public class OrderRepository : IOrderRepository
         _context = context;
     }
 
-    public Order Add(Order order)
+    public Task<Order> AddAsync(Order order)
     {
         _context.Orders.Add(order);
 
-        return order;
+        return Task.FromResult(order);
     }
 
-    public Order? GetById(int id)
+    public async Task<Order?> GetByIdAsync(int id)
     {
-        return _context.Orders
-            .FirstOrDefault(o => o.Id == id);
+        return await _context.Orders
+            .FirstOrDefaultAsync(o => o.Id == id);
     }
 
-    public bool ClientExists(int clientId)
+    public async Task<bool> ClientExistsAsync(int clientId)
     {
-        return _context.Clients
-            .Any(c => c.Id == clientId);
+        return await _context.Clients
+            .AnyAsync(c => c.Id == clientId);
     }
 
-    public bool Delete(int id)
+    public async Task<bool> DeleteAsync(int id)
     {
         var order =
-            _context.Orders
-                .FirstOrDefault(o => o.Id == id);
+            await _context.Orders
+                .FirstOrDefaultAsync(o => o.Id == id);
 
         if (order == null)
             return false;
@@ -46,9 +47,9 @@ public class OrderRepository : IOrderRepository
         return true;
     }
 
-    public void SaveChanges()
+    public async Task SaveChangesAsync()
     {
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
     }
 
 }

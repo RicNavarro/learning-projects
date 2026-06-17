@@ -5,12 +5,12 @@ namespace OrderFlow.Api.Services.Interfaces
 {
     public interface IOrderService
     {
-        OrderResponse Create(CreateOrderRequest request);
+        Task<OrderResponse> CreateAsync(CreateOrderRequest request);
 
-        OrderResponse? GetById(int id);
+        Task<OrderResponse?> GetByIdAsync(int id);
 
-        OrderResponse? Update(int id, CreateOrderRequest request);
+        Task<OrderResponse?> UpdateAsync(int id, CreateOrderRequest request);
 
-        bool Delete(int id);
+        Task<bool> DeleteAsync(int id);
     }
 }

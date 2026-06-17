@@ -14,29 +14,29 @@ public class ClientRepository : IClientRepository
         _context = context;
     }
 
-    public List<Client> GetAll()
+    public async Task<List<Client>> GetAllAsync()
     {
-        return _context.Clients
+        return await _context.Clients
             .Include(c => c.Orders)
-            .ToList();
+            .ToListAsync();
     }
 
-    public Client Add(Client client)
+    public Task<Client> AddAsync(Client client)
     {
         _context.Clients.Add(client);
 
-        return client;
+        return Task.FromResult(client);
     }
 
-    public Client? GetByIdWithOrders(int id)
+    public async Task<Client?> GetByIdWithOrdersAsync(int id)
     {
-        return _context.Clients
+        return await _context.Clients
             .Include(c => c.Orders)
-            .FirstOrDefault(c => c.Id == id);
+            .FirstOrDefaultAsync(c => c.Id == id);
     }
 
-    public void SaveChanges()
+    public async Task SaveChangesAsync()
     {
-        _context.SaveChanges();
+        await _context.SaveChangesAsync();
     }
 }

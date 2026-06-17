@@ -20,11 +20,11 @@ namespace OrderFlow.Api.Services
 
         // CREATE
 
-        public OrderResponse Create(CreateOrderRequest request)
+        public async Task<OrderResponse> CreateAsync(CreateOrderRequest request)
         {
 
             //Validando se o cliente existe antes de criar o pedido
-            var clientExists = _repository.ClientExists(request.ClientId);
+            var clientExists = await _repository.ClientExistsAsync(request.ClientId);
             if (!clientExists)
                 throw new ArgumentException($"O cliente {request.ClientId} não existe");
 
@@ -35,8 +35,8 @@ namespace OrderFlow.Api.Services
                 ClientId = request.ClientId
             };
 
-            _repository.Add(order);
-            _repository.SaveChanges();
+            await _repository.AddAsync(order);
+            await _repository.SaveChangesAsync();
 
             return order.ToResponse();
         }
@@ -47,9 +47,9 @@ namespace OrderFlow.Api.Services
 
         // READ
 
-        public OrderResponse? GetById(int id)
+        public async Task<OrderResponse?> GetByIdAsync(int id)
         {
-            var order = _repository.GetById(id);
+            var order = await _repository.GetByIdAsync(id);
 
             if (order == null)
                 return null;
@@ -64,16 +64,16 @@ namespace OrderFlow.Api.Services
 
         // UPDATE
 
-        public OrderResponse? Update(int id, CreateOrderRequest request)
+        public async Task<OrderResponse?> UpdateAsync(int id, CreateOrderRequest request)
         {
 
-            var order = _repository.GetById(id);
+            var order = await _repository.GetByIdAsync(id);
             if (order == null)
                 return null;
         //        throw new KeyNotFoundException($"Pedido {id} não existe");
 
 
-            var clientExists = _repository.ClientExists(request.ClientId);
+            var clientExists = await _repository.ClientExistsAsync(request.ClientId);
             if (!clientExists)
                 throw new ArgumentException($"O cliente {request.ClientId} não existe");
 
@@ -81,7 +81,7 @@ namespace OrderFlow.Api.Services
             order.Description = request.Description;
             order.ClientId = request.ClientId;
 
-            _repository.SaveChanges();
+            await _repository.SaveChangesAsync();
 
             return order.ToResponse();
         }
@@ -91,15 +91,15 @@ namespace OrderFlow.Api.Services
 
         // DELETE
 
-        public bool Delete(int id)
+        public async Task<bool> DeleteAsync(int id)
         {
-            var deleted = _repository.Delete(id);
+            var deleted = await _repository.DeleteAsync(id);
 
             if (!deleted)
                 return false;
             //    throw new KeyNotFoundException($"Pedido {id} não existe");
 
-            _repository.SaveChanges();
+            await _repository.SaveChangesAsync();
 
             return true;
         }

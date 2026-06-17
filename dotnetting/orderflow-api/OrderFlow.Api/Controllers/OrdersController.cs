@@ -21,19 +21,21 @@ namespace OrderFlow.Api.Controllers
 
         //CREATE
         [HttpPost]
-        public IActionResult Create(CreateOrderRequest request) // Alterado para receber o DTO
+        public async Task<IActionResult> Create(CreateOrderRequest request)
         {
+            var created = await _service.CreateAsync(request);
 
-            var created = _service.Create(request);
-            return CreatedAtAction(nameof(GetById), new { id = created.Id }, created);
+            return CreatedAtAction(nameof(GetById),
+                new { id = created.Id },
+                created);
         }
 
 
         //READ
         [HttpGet("{id}")]
-        public IActionResult GetById(int id)
+        public async Task<IActionResult> GetById(int id)
         {
-            var order = _service.GetById(id);
+            var order = await _service.GetByIdAsync(id);
 
             if (order == null)
                 return NotFound();
@@ -43,9 +45,9 @@ namespace OrderFlow.Api.Controllers
 
         // UPDATE
         [HttpPut("{id}")]
-        public IActionResult Update(int id, CreateOrderRequest request)
+        public async Task<IActionResult> Update(int id, CreateOrderRequest request)
         {
-            var updated = _service.Update(id, request);
+            var updated = await _service.UpdateAsync(id, request);
 
             if (updated == null)
                 return NotFound();
@@ -55,9 +57,9 @@ namespace OrderFlow.Api.Controllers
 
         // DELETE
         [HttpDelete("{id}")]
-        public IActionResult Delete(int id)
+        public async Task<IActionResult> Delete(int id)
         {
-            var deleted = _service.Delete(id);
+            var deleted = await _service.DeleteAsync(id);
 
             if (!deleted)
                 return NotFound();

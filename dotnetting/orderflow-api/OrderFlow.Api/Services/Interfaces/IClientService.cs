@@ -5,11 +5,10 @@ namespace OrderFlow.Api.Services.Interfaces
 {
     public interface IClientService
     {
-        List<ClientResponse> GetAll();
+        Task<List<ClientResponse>> GetAllAsync();
 
-        ClientResponse Create(CreateClientRequest request);
+        Task<ClientResponse> CreateAsync(CreateClientRequest request);
 
-        ClientResponse? GetByIdWithOrders(int id);
-
+        Task<ClientResponse?> GetByIdWithOrdersAsync(int id);
     }
 }

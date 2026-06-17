@@ -21,15 +21,15 @@ namespace OrderFlow.Api.Services
             _repository = repository;
         }
 
-        public List<ClientResponse> GetAll()
+        public async Task<List<ClientResponse>> GetAllAsync()
         {
             // O EF Core busca no banco e transforma em lista
-            return _repository.GetAll()
+            return (await _repository.GetAllAsync())
                 .Select(c => c.ToResponse())
                 .ToList();
         }
 
-        public ClientResponse Create(CreateClientRequest request)
+        public async Task<ClientResponse> CreateAsync(CreateClientRequest request)
         {
 
             var client = new Client
@@ -38,14 +38,14 @@ namespace OrderFlow.Api.Services
                 Email = request.Email
             };
 
-            _repository.Add(client); // Prepara o INSERT
-            _repository.SaveChanges();      // Executa no SQL Server
+            await _repository.AddAsync(client); // perpara o insert
+            await _repository.SaveChangesAsync(); // adiciona no banco
             return client.ToResponse();
         }
 
-        public ClientResponse? GetByIdWithOrders(int id)
+        public async Task<ClientResponse?> GetByIdWithOrdersAsync(int id)
         {
-            var client = _repository.GetByIdWithOrders(id);
+            var client = await _repository.GetByIdWithOrdersAsync(id);
 
             if (client == null)
                 return null;
