@@ -5,6 +5,7 @@ using OrderFlow.Api.DTOs.Responses;
 using OrderFlow.Api.Services.Interfaces;
 using OrderFlow.Api.Mappings;
 using OrderFlow.Api.Repositories.Interfaces;
+using OrderFlow.Api.Exceptions;
 
 namespace OrderFlow.Api.Services
 {
@@ -26,7 +27,7 @@ namespace OrderFlow.Api.Services
             //Validando se o cliente existe antes de criar o pedido
             var clientExists = await _repository.ClientExistsAsync(request.ClientId);
             if (!clientExists)
-                throw new ArgumentException($"O cliente {request.ClientId} não existe");
+                throw new NotFoundException($"O cliente {request.ClientId} não existe");
 
             
             var order = new Order
@@ -75,7 +76,7 @@ namespace OrderFlow.Api.Services
 
             var clientExists = await _repository.ClientExistsAsync(request.ClientId);
             if (!clientExists)
-                throw new ArgumentException($"O cliente {request.ClientId} não existe");
+                throw new NotFoundException($"O cliente {request.ClientId} não existe");
 
 
             order.Description = request.Description;

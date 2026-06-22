@@ -1,0 +1,11 @@
+//renovar o token
+
+//curl -X POST http://localhost:5130/api/auth/login -H "Content-Type: application/json" -d '{
+//"email":"admin@orderflow.com",
+//"password":"001122"
+//}'
+
+
+
+GET http://localhost:5130/api/orders/999999
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhZG1pbkBvcmRlcmZsb3cuY29tIiwiZXhwIjoxNzgyMTM4NDk0LCJpc3MiOiJPcmRlckZsb3ciLCJhdWQiOiJPcmRlckZsb3dVc2VycyJ9.xuUulrJj9Pc_-jTEqSV3q3Q4uJcnIJyXJ9IPxTCrxY4

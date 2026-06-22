@@ -6,6 +6,7 @@ using OrderFlow.Api.Models;
 using OrderFlow.Api.Services;
 using OrderFlow.Tests.Helpers;
 using OrderFlow.Api.Repositories.Interfaces;
+using OrderFlow.Api.Exceptions;
 
 public class OrderServiceTests
 {
@@ -137,7 +138,7 @@ public class OrderServiceTests
         // Assert
 
         await action.Should()
-            .ThrowAsync<ArgumentException>().
+            .ThrowAsync<NotFoundException>().
             WithMessage("*não existe*");
     }
 

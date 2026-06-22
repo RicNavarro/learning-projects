@@ -16,6 +16,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
+using OrderFlow.Api.Exceptions;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Controllers
@@ -67,6 +69,7 @@ builder.Services.AddFluentValidationAutoValidation();
 
 // Relatório de erros
 builder.Services.AddProblemDetails();
+builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 
 // Autenticação
 builder.Services.AddScoped<IAuthService, AuthService>();
@@ -74,6 +77,9 @@ builder.Services.AddScoped<IAuthService, AuthService>();
 // Repositorios
 builder.Services.AddScoped<IClientRepository, ClientRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
+
+
+
 
 
 var app = builder.Build();
