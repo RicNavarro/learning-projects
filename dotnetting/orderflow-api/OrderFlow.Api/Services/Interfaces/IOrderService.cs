@@ -7,10 +7,10 @@ namespace OrderFlow.Api.Services.Interfaces
     {
         Task<OrderResponse> CreateAsync(CreateOrderRequest request);
 
-        Task<OrderResponse?> GetByIdAsync(int id);
+        Task<OrderResponse> GetByIdAsync(int id);
 
-        Task<OrderResponse?> UpdateAsync(int id, CreateOrderRequest request);
+        Task<OrderResponse> UpdateAsync(int id, CreateOrderRequest request);
 
-        Task<bool> DeleteAsync(int id);
+        Task DeleteAsync(int id);
     }
 }

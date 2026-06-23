@@ -10,7 +10,11 @@ public class GlobalExceptionHandler : IExceptionHandler
         Exception exception,
         CancellationToken cancellationToken)
     {
-        var problemDetails = new ProblemDetails();
+        var problemDetails = new ProblemDetails
+        {
+            Instance = httpContext.Request.Path,
+            Type = exception.GetType().Name
+        };
 
         switch (exception)
         {

@@ -8,6 +8,7 @@ using OrderFlow.Api.DTOs.Responses;
 using OrderFlow.Api.Services.Interfaces;
 using OrderFlow.Api.Repositories.Interfaces;
 using OrderFlow.Api.Mappings;
+using OrderFlow.Api.Exceptions;
 
 namespace OrderFlow.Api.Services
 {
@@ -43,12 +44,12 @@ namespace OrderFlow.Api.Services
             return client.ToResponse();
         }
 
-        public async Task<ClientResponse?> GetByIdWithOrdersAsync(int id)
+        public async Task<ClientResponse> GetByIdWithOrdersAsync(int id)
         {
             var client = await _repository.GetByIdWithOrdersAsync(id);
 
             if (client == null)
-                return null;
+                throw new NotFoundException($"Cliente {id} não encontrado.");
 
             return client.ToResponse();
         }

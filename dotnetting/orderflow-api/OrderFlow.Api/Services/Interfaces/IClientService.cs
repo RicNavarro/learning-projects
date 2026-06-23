@@ -9,6 +9,6 @@ namespace OrderFlow.Api.Services.Interfaces
 
         Task<ClientResponse> CreateAsync(CreateClientRequest request);
 
-        Task<ClientResponse?> GetByIdWithOrdersAsync(int id);
+        Task<ClientResponse> GetByIdWithOrdersAsync(int id);
     }
 }

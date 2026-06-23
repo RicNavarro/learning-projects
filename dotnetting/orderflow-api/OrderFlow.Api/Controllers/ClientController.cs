@@ -39,10 +39,6 @@ namespace OrderFlow.Api.Controllers{
         public async Task<IActionResult> GetById(int id)
         {
             var client = await _service.GetByIdWithOrdersAsync(id);
-
-            if (client == null)
-                return NotFound();
-
             return Ok(client);
         }
     }

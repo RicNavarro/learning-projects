@@ -36,10 +36,6 @@ namespace OrderFlow.Api.Controllers
         public async Task<IActionResult> GetById(int id)
         {
             var order = await _service.GetByIdAsync(id);
-
-            if (order == null)
-                return NotFound();
-            
             return Ok(order);
         }
 
@@ -48,10 +44,6 @@ namespace OrderFlow.Api.Controllers
         public async Task<IActionResult> Update(int id, CreateOrderRequest request)
         {
             var updated = await _service.UpdateAsync(id, request);
-
-            if (updated == null)
-                return NotFound();
-
             return Ok(updated);
         }
 
@@ -59,11 +51,7 @@ namespace OrderFlow.Api.Controllers
         [HttpDelete("{id}")]
         public async Task<IActionResult> Delete(int id)
         {
-            var deleted = await _service.DeleteAsync(id);
-
-            if (!deleted)
-                return NotFound();
-
+            await _service.DeleteAsync(id);
             return NoContent();
         }
 

@@ -48,13 +48,14 @@ namespace OrderFlow.Api.Services
 
         // READ
 
-        public async Task<OrderResponse?> GetByIdAsync(int id)
+        public async Task<OrderResponse> GetByIdAsync(int id)
         {
             var order = await _repository.GetByIdAsync(id);
 
             if (order == null)
-                return null;
-        //        throw new KeyNotFoundException($"Pedido {id} não existe");
+                throw new NotFoundException($"Pedido {id} não encontrado.");
+        //        return null;
+
 
             return order.ToResponse();
         }
@@ -65,13 +66,13 @@ namespace OrderFlow.Api.Services
 
         // UPDATE
 
-        public async Task<OrderResponse?> UpdateAsync(int id, CreateOrderRequest request)
+        public async Task<OrderResponse> UpdateAsync(int id, CreateOrderRequest request)
         {
 
             var order = await _repository.GetByIdAsync(id);
             if (order == null)
-                return null;
-        //        throw new KeyNotFoundException($"Pedido {id} não existe");
+                throw new NotFoundException($"Pedido {id} não encontrado.");
+                //return null;
 
 
             var clientExists = await _repository.ClientExistsAsync(request.ClientId);
@@ -92,17 +93,15 @@ namespace OrderFlow.Api.Services
 
         // DELETE
 
-        public async Task<bool> DeleteAsync(int id)
+        public async Task DeleteAsync(int id)
         {
             var deleted = await _repository.DeleteAsync(id);
 
             if (!deleted)
-                return false;
-            //    throw new KeyNotFoundException($"Pedido {id} não existe");
+                throw new NotFoundException($"Pedido {id} não encontrado.");
 
             await _repository.SaveChangesAsync();
 
-            return true;
         }
 
 

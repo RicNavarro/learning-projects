@@ -5,6 +5,7 @@ using OrderFlow.Api.Models;
 using OrderFlow.Api.Services;
 using OrderFlow.Tests.Helpers;
 using OrderFlow.Api.Repositories.Interfaces;
+using OrderFlow.Api.Exceptions;
 
 namespace OrderFlow.Tests.Services;
 

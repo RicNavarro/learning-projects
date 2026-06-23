@@ -44,30 +44,22 @@ public class OrderServiceTests
     }
 
     [Fact]
-    public async Task GetById_ShouldReturnNull_WhenOrderDoesNotExist()
+    public async Task GetById_ShouldThrowNotFoundException_WhenOrderDoesNotExist()
     {
-        // Arrange
-
-        //var context = DbContextFactory.Create();
         var repositoryMock = new Mock<IOrderRepository>();
-        
-        repositoryMock.Setup
-            (x => x.GetByIdAsync(999))
+
+        repositoryMock
+            .Setup(x => x.GetByIdAsync(999))
             .ReturnsAsync((Order?)null);
 
         var service = new OrderService(repositoryMock.Object);
 
-        // Act
+        Func<Task> action = async () =>
+            await service.GetByIdAsync(999);
 
-        var result = await service.GetByIdAsync(999);
-
-        // Assert
-
-        result.Should().BeNull();
-
-        repositoryMock.Verify(
-            x => x.GetByIdAsync(999),
-            Times.Once);
+        await action.Should()
+            .ThrowAsync<NotFoundException>()
+            .WithMessage("*não encontrado*");
     }
 
     [Fact]
@@ -143,24 +135,22 @@ public class OrderServiceTests
     }
 
     [Fact]
-    public async Task Delete_ShouldReturnFalse_WhenOrderDoesNotExist()
+    public async Task Delete_ShouldThrowNotFoundException_WhenOrderDoesNotExist()
     {
-        //var context = DbContextFactory.Create();
         var repositoryMock = new Mock<IOrderRepository>();
 
         repositoryMock
-            .Setup(x=>x.DeleteAsync(999))
+            .Setup(x => x.DeleteAsync(999))
             .ReturnsAsync(false);
 
         var service = new OrderService(repositoryMock.Object);
 
-        var result = await service.DeleteAsync(999);
+        Func<Task> action = async () =>
+            await service.DeleteAsync(999);
 
-        result.Should().BeFalse();
-        
-        repositoryMock.Verify(
-            x => x.DeleteAsync(999),
-            Times.Once);
+        await action.Should()
+            .ThrowAsync<NotFoundException>()
+            .WithMessage("*não encontrado*");
     }
 
 
@@ -180,11 +170,10 @@ public class OrderServiceTests
 
         //Act
 
-        var deleted = await service.DeleteAsync(1);
+        Func<Task> action = async () =>
+            await service.DeleteAsync(1);
 
-        //Assert
-
-        deleted.Should().BeTrue();
+        await action.Should().NotThrowAsync();
 
         repositoryMock.Verify(
             x => x.DeleteAsync(1),
