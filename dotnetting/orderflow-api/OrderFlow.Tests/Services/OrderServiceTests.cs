@@ -7,6 +7,7 @@ using OrderFlow.Api.Services;
 using OrderFlow.Tests.Helpers;
 using OrderFlow.Api.Repositories.Interfaces;
 using OrderFlow.Api.Exceptions;
+using Microsoft.Extensions.Logging;
 
 public class OrderServiceTests
 {
@@ -14,6 +15,10 @@ public class OrderServiceTests
     public async Task GetById_ShouldReturnOrder()
     {
         // Arrange
+
+        var loggerMock = new Mock<ILogger<OrderService>>();
+
+        
 
         var repositoryMock = new Mock<IOrderRepository>();
 
@@ -25,7 +30,9 @@ public class OrderServiceTests
                 ClientId = 1
             });
 
-        var service = new OrderService(repositoryMock.Object);
+        var service = new OrderService(
+            repositoryMock.Object,
+            loggerMock.Object);
 
         // Act
 
@@ -48,11 +55,17 @@ public class OrderServiceTests
     {
         var repositoryMock = new Mock<IOrderRepository>();
 
+        var loggerMock = new Mock<ILogger<OrderService>>();
+
+        
+
         repositoryMock
             .Setup(x => x.GetByIdAsync(999))
             .ReturnsAsync((Order?)null);
 
-        var service = new OrderService(repositoryMock.Object);
+        var service = new OrderService(
+            repositoryMock.Object,
+            loggerMock.Object);
 
         Func<Task> action = async () =>
             await service.GetByIdAsync(999);
@@ -67,6 +80,10 @@ public class OrderServiceTests
     {
         // Arrange
 
+        var loggerMock = new Mock<ILogger<OrderService>>();
+
+        
+
         //var context = DbContextFactory.Create();
         var repositoryMock = new Mock<IOrderRepository>();
 
@@ -74,7 +91,9 @@ public class OrderServiceTests
             .Setup(x => x.ClientExistsAsync(1))
             .ReturnsAsync(true);
 
-        var service = new OrderService(repositoryMock.Object);
+        var service = new OrderService(
+            repositoryMock.Object,
+            loggerMock.Object);
 
         var request = new CreateOrderRequest
         {
@@ -106,6 +125,10 @@ public class OrderServiceTests
     {
         // Arrange
 
+        var loggerMock = new Mock<ILogger<OrderService>>();
+
+        
+
         //var context = DbContextFactory.Create();
         var repositoryMock = new Mock<IOrderRepository>();
 
@@ -113,7 +136,9 @@ public class OrderServiceTests
             .Setup(x=>x.ClientExistsAsync(999))
             .ReturnsAsync(false);
 
-        var service = new OrderService(repositoryMock.Object);
+        var service = new OrderService(
+            repositoryMock.Object,
+            loggerMock.Object);
 
         var request =
         new CreateOrderRequest
@@ -139,11 +164,17 @@ public class OrderServiceTests
     {
         var repositoryMock = new Mock<IOrderRepository>();
 
+        var loggerMock = new Mock<ILogger<OrderService>>();
+
+        
+
         repositoryMock
             .Setup(x => x.DeleteAsync(999))
             .ReturnsAsync(false);
 
-        var service = new OrderService(repositoryMock.Object);
+        var service = new OrderService(
+            repositoryMock.Object,
+            loggerMock.Object);
 
         Func<Task> action = async () =>
             await service.DeleteAsync(999);
@@ -162,12 +193,18 @@ public class OrderServiceTests
         //var context = DbContextFactory.Create();
         var repositoryMock = new Mock<IOrderRepository>();
 
+        var loggerMock = new Mock<ILogger<OrderService>>();
+
+        
+
         repositoryMock
             .Setup(x=>x.DeleteAsync(1))
             .ReturnsAsync(true);
 
-        var service = new OrderService(repositoryMock.Object);
-
+        var service = new OrderService(
+            repositoryMock.Object,
+            loggerMock.Object);
+            
         //Act
 
         Func<Task> action = async () =>

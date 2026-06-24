@@ -6,6 +6,7 @@ using OrderFlow.Api.Services;
 using OrderFlow.Tests.Helpers;
 using OrderFlow.Api.Repositories.Interfaces;
 using OrderFlow.Api.Exceptions;
+using Microsoft.Extensions.Logging;
 
 namespace OrderFlow.Tests.Services;
 
@@ -15,10 +16,13 @@ public class ClientServiceTests
     public async Task Create_ShouldCreateClient()
     {
         // Arrange
-
+        var loggerMock = new Mock<ILogger<ClientService>>();
+        
         var repositoryMock = new Mock<IClientRepository>();
 
-        var service = new ClientService(repositoryMock.Object);
+        var service = new ClientService(
+            repositoryMock.Object,
+            loggerMock.Object);
 
         var request = new CreateClientRequest
         {
@@ -51,6 +55,7 @@ public class ClientServiceTests
     public async Task GetAll_ShouldReturnCreatedClients()
     {
         // Arrange
+        var loggerMock = new Mock<ILogger<ClientService>>();
 
         var repositoryMock = new Mock<IClientRepository>();
 
@@ -72,7 +77,9 @@ public class ClientServiceTests
                 }
             );
         
-        var service = new ClientService(repositoryMock.Object);
+        var service = new ClientService(
+            repositoryMock.Object,
+            loggerMock.Object);
 
         // Act
 
@@ -99,7 +106,9 @@ public class ClientServiceTests
         // Arrange
 
         var repositoryMock = new Mock<IClientRepository>();
+        var loggerMock = new Mock<ILogger<ClientService>>();
 
+        
         repositoryMock
         .Setup(x => x.GetByIdWithOrdersAsync(1))
         .ReturnsAsync(
@@ -111,7 +120,9 @@ public class ClientServiceTests
             }
         );
 
-        var service = new ClientService(repositoryMock.Object);
+        var service = new ClientService(
+            repositoryMock.Object,
+            loggerMock.Object);
 
         // Act
 

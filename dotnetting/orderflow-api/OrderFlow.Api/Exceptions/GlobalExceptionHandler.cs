@@ -5,6 +5,15 @@ namespace OrderFlow.Api.Exceptions;
 
 public class GlobalExceptionHandler : IExceptionHandler
 {
+    private readonly ILogger<GlobalExceptionHandler> _logger;
+
+    public GlobalExceptionHandler(
+        ILogger<GlobalExceptionHandler> logger)
+    {
+        _logger = logger;
+    }
+    
+    
     public async ValueTask<bool> TryHandleAsync(
         HttpContext httpContext,
         Exception exception,
@@ -19,18 +28,21 @@ public class GlobalExceptionHandler : IExceptionHandler
         switch (exception)
         {
             case NotFoundException:
+                _logger.LogWarning(exception, "Recurso não encontrado");
                 problemDetails.Status = StatusCodes.Status404NotFound;
                 problemDetails.Title = "Resource not found";
                 problemDetails.Detail = exception.Message;
                 break;
 
             case BusinessRuleException:
+                _logger.LogWarning(exception, "Violação de regra de negócio");
                 problemDetails.Status = StatusCodes.Status400BadRequest;
                 problemDetails.Title = "Business rule violation";
                 problemDetails.Detail = exception.Message;
                 break;
 
             default:
+                _logger.LogError(exception, "Exceção não tratada");
                 problemDetails.Status = StatusCodes.Status500InternalServerError;
                 problemDetails.Title = "Internal server error";
                 problemDetails.Detail = "An unexpected error occurred.";

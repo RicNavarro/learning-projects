@@ -10,16 +10,21 @@ using OrderFlow.Api.Repositories.Interfaces;
 using OrderFlow.Api.Mappings;
 using OrderFlow.Api.Exceptions;
 
+
 namespace OrderFlow.Api.Services
 {
     public class ClientService : IClientService
     {
         private readonly IClientRepository _repository;
+        private readonly ILogger<ClientService> _logger;
 
         // O ASP.NET vai injetar o DbContext aqui automaticamente
-        public ClientService(IClientRepository repository)
+        public ClientService(
+            IClientRepository repository,
+            ILogger<ClientService> logger)
         {
             _repository = repository;
+            _logger = logger;
         }
 
         public async Task<List<ClientResponse>> GetAllAsync()
@@ -39,8 +44,12 @@ namespace OrderFlow.Api.Services
                 Email = request.Email
             };
 
+            _logger.LogInformation("Criando cliente com email {Email}", request.Email);
+
+
             await _repository.AddAsync(client); // perpara o insert
             await _repository.SaveChangesAsync(); // adiciona no banco
+
             return client.ToResponse();
         }
 
@@ -49,8 +58,12 @@ namespace OrderFlow.Api.Services
             var client = await _repository.GetByIdWithOrdersAsync(id);
 
             if (client == null)
+            {
+                _logger.LogWarning("Cliente {ClientId} não encontrado.", id);
                 throw new NotFoundException($"Cliente {id} não encontrado.");
 
+            }
+            
             return client.ToResponse();
         }
 
