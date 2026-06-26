@@ -44,11 +44,11 @@ namespace OrderFlow.Api.Services
                 Email = request.Email
             };
 
-            _logger.LogInformation("Criando cliente com email {Email}", request.Email);
-
-
             await _repository.AddAsync(client); // perpara o insert
             await _repository.SaveChangesAsync(); // adiciona no banco
+
+            _logger.LogInformation("Criando cliente com email {Email}", request.Email);
+
 
             return client.ToResponse();
         }

@@ -8,4 +8,20 @@
 
 
 GET http://localhost:5130/api/orders/999999
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhZG1pbkBvcmRlcmZsb3cuY29tIiwiZXhwIjoxNzgyMzA4MzkzLCJpc3MiOiJPcmRlckZsb3ciLCJhdWQiOiJPcmRlckZsb3dVc2VycyJ9.CboF3m4V8cdtFcHmJHTAUT69bjtUcKdaaSEybVNN4vo
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhZG1pbkBvcmRlcmZsb3cuY29tIiwiZXhwIjoxNzgyNDgwODc3LCJpc3MiOiJPcmRlckZsb3ciLCJhdWQiOiJPcmRlckZsb3dVc2VycyJ9.5HfoKGf_RwNrXo1ZN7lygWA-2uje6zB9zUzgN3e36bI
+
+
+### Criar pedido
+
+POST http://localhost:5130/api/orders
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhZG1pbkBvcmRlcmZsb3cuY29tIiwiZXhwIjoxNzgyNDgwODc3LCJpc3MiOiJPcmRlckZsb3ciLCJhdWQiOiJPcmRlckZsb3dVc2VycyJ9.5HfoKGf_RwNrXo1ZN7lygWA-2uje6zB9zUzgN3e36bI
+Content-Type: application/json
+
+{
+    "description": "Sonic Frontiers - Nintendo Switch 2",
+    "clientId": 1
+}
+
+##
+
+

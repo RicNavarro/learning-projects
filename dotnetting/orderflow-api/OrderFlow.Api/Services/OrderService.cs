@@ -43,10 +43,10 @@ namespace OrderFlow.Api.Services
                 ClientId = request.ClientId
             };
 
-            _logger.LogInformation("Criando pedido para cliente {ClientId}", request.ClientId);
-
             await _repository.AddAsync(order);
             await _repository.SaveChangesAsync();
+
+            _logger.LogInformation("Pedido {OrderId} para cliente {ClientId}", order.Id, request.ClientId);
 
             return order.ToResponse();
         }
