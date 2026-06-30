@@ -12,5 +12,9 @@ public interface IOrderRepository
 
     Task<bool> ClientExistsAsync(int clientId);
 
+    Task<(IEnumerable<Order> Orders, int TotalItems)> GetPagedAsync(
+        int page,
+        int pageSize);
+
     Task SaveChangesAsync();
 }
