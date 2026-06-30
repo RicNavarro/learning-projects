@@ -47,6 +47,25 @@ public class OrderRepository : IOrderRepository
         return true;
     }
 
+    public async Task<(IEnumerable<Order> Orders, int TotalItems)> GetPagedAsync(
+        int page,
+        int pageSize)
+    {
+        var query = _context.Orders
+            .Include(o => o.Client)
+            .AsQueryable();
+
+        var totalItems = await query.CountAsync();
+
+        var orders = await query
+            .OrderBy(o => o.Id)
+            .Skip((page - 1) * pageSize)
+            .Take(pageSize)
+            .ToListAsync();
+
+        return (orders, totalItems);
+    }
+
     public async Task SaveChangesAsync()
     {
         await _context.SaveChangesAsync();
