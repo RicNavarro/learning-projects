@@ -70,7 +70,27 @@ namespace OrderFlow.Api.Services
             return order.ToResponse();
         }
 
+        public async Task<PagedResponse<OrderResponse>> GetPagedAsync(GetOrdersRequest request)
+        {
+            _logger.LogInformation(
+                "Buscando pedidos. Página {Page}, Tamanho {PageSize}",
+                request.Page,
+                request.PageSize);
 
+            var (orders, totalItems) = await _repository.GetPagedAsync(
+                request.Page,
+                request.PageSize);
+
+            return new PagedResponse<OrderResponse>
+            {
+                Items = orders.Select(o => o.ToResponse()),
+                Page = request.Page,
+                PageSize = request.PageSize,
+                TotalItems = totalItems,
+                TotalPages = (int)Math.Ceiling(
+                    totalItems / (double)request.PageSize)
+            };
+        }
 
 
 

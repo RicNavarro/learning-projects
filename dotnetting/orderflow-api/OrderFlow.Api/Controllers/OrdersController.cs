@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Mvc;
 using OrderFlow.Api.Models;
 using OrderFlow.Api.Services;
 using OrderFlow.Api.DTOs.Requests;
+using OrderFlow.Api.DTOs.Responses;
 using OrderFlow.Api.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 
@@ -37,6 +38,15 @@ namespace OrderFlow.Api.Controllers
         {
             var order = await _service.GetByIdAsync(id);
             return Ok(order);
+        }
+
+        [HttpGet]
+        public async Task<ActionResult<PagedResponse<OrderResponse>>> GetOrders(
+            [FromQuery] GetOrdersRequest request)
+        {
+            var response = await _service.GetPagedAsync(request);
+
+            return Ok(response);
         }
 
         // UPDATE

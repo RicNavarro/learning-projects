@@ -12,5 +12,7 @@ namespace OrderFlow.Api.Services.Interfaces
         Task<OrderResponse> UpdateAsync(int id, CreateOrderRequest request);
 
         Task DeleteAsync(int id);
+
+        Task<PagedResponse<OrderResponse>> GetPagedAsync(GetOrdersRequest request);
     }
 }
