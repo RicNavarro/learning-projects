@@ -220,4 +220,76 @@ public class OrderServiceTests
             x => x.SaveChangesAsync(),
             Times.Once);
     }
+
+    [Fact]
+    public async Task GetPaged_ShouldReturnPagedResponse()
+    {
+        // Arrange
+
+        var repositoryMock = new Mock<IOrderRepository>();
+
+        var loggerMock = new Mock<ILogger<OrderService>>();
+
+        var orders = new List<Order>
+        {
+            new()
+            {
+                Id = 1,
+                Description = "Pedido 1",
+                ClientId = 1,
+                Client = new Client
+                {
+                    Id = 1,
+                    Name = "Cliente Teste"
+                }
+            },
+            new()
+            {
+                Id = 2,
+                Description = "Pedido 2",
+                ClientId = 1,
+                Client = new Client
+                {
+                    Id = 1,
+                    Name = "Cliente Teste"
+                }
+            }
+        };
+
+        repositoryMock
+            .Setup(x => x.GetPagedAsync(1, 10))
+            .ReturnsAsync((orders, 12));
+
+        var service = new OrderService(
+            repositoryMock.Object,
+            loggerMock.Object);
+
+        var request = new GetOrdersRequest
+        {
+            Page = 1,
+            PageSize = 10
+        };
+
+        // Act
+
+        var result = await service.GetPagedAsync(request);
+
+        // Assert
+
+        result.Should().NotBeNull();
+
+        result.Items.Should().HaveCount(2);
+
+        result.Page.Should().Be(1);
+
+        result.PageSize.Should().Be(10);
+
+        result.TotalItems.Should().Be(12);
+
+        result.TotalPages.Should().Be(2);
+
+        repositoryMock.Verify(
+            x => x.GetPagedAsync(1, 10),
+            Times.Once);
+    }
 }
