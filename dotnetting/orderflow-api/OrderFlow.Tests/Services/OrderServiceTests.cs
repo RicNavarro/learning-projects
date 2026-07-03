@@ -390,6 +390,39 @@ public class OrderServiceTests
         result.TotalPages.Should().Be(0);
     }
 
-    
+    [Fact]
+    public async Task GetPaged_ShouldPassPaginationParametersToRepository()
+    {
+        // Arrange
+
+        var repositoryMock = new Mock<IOrderRepository>();
+        var loggerMock = new Mock<ILogger<OrderService>>();
+
+        repositoryMock
+            .Setup(x => x.GetPagedAsync(3, 25))
+            .ReturnsAsync((new List<Order>(), 50));
+
+        var service = new OrderService(
+            repositoryMock.Object,
+            loggerMock.Object);
+
+        var request = new GetOrdersRequest
+        {
+            Page = 3,
+            PageSize = 25
+        };
+
+        // Act
+
+        await service.GetPagedAsync(request);
+
+        // Assert
+
+        repositoryMock.Verify(
+            x => x.GetPagedAsync(3, 25),
+            Times.Once);
+    }
+
+
 
 }
