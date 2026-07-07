@@ -11,4 +11,20 @@ public class PagedResponse<T>
     public int TotalItems { get; set; }
 
     public int TotalPages { get; set; }
+
+    public static PagedResponse<T> Create(
+        IEnumerable<T> items,
+        int page,
+        int pageSize,
+        int totalItems)
+    {
+        return new PagedResponse<T>
+        {
+            Items = items,
+            Page = page,
+            PageSize = pageSize,
+            TotalItems = totalItems,
+            TotalPages = (int)Math.Ceiling(totalItems / (double)pageSize)
+        };
+    }
 }

@@ -81,15 +81,11 @@ namespace OrderFlow.Api.Services
                 request.Page,
                 request.PageSize);
 
-            return new PagedResponse<OrderResponse>
-            {
-                Items = orders.Select(o => o.ToResponse()),
-                Page = request.Page,
-                PageSize = request.PageSize,
-                TotalItems = totalItems,
-                TotalPages = (int)Math.Ceiling(
-                    totalItems / (double)request.PageSize)
-            };
+            return PagedResponse<OrderResponse>.Create(
+                orders.Select(o => o.ToResponse()),
+                request.Page,
+                request.PageSize,
+                totalItems);
         }
 
 
