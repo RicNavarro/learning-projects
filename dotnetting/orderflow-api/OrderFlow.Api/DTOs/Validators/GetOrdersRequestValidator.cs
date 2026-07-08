@@ -18,5 +18,10 @@ public class GetOrdersRequestValidator : AbstractValidator<GetOrdersRequest>
         RuleFor(x => x.PageSize)
             .LessThanOrEqualTo(100)
             .WithMessage("O tamanho máximo da página é 100.");
+
+        RuleFor(x => x.ClientId)
+            .GreaterThan(0)
+            .When(x => x.ClientId.HasValue)
+            .WithMessage("O cliente deve ser maior que zero.");
     }
 }
