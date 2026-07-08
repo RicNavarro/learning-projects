@@ -2,6 +2,7 @@ using Microsoft.EntityFrameworkCore;
 using OrderFlow.Api.Data;
 using OrderFlow.Api.Models;
 using OrderFlow.Api.Repositories.Interfaces;
+using OrderFlow.Api.DTOs.Requests;
 
 namespace OrderFlow.Api.Repositories;
 
@@ -48,19 +49,31 @@ public class OrderRepository : IOrderRepository
     }
 
     public async Task<(IEnumerable<Order> Orders, int TotalItems)> GetPagedAsync(
-        int page,
-        int pageSize)
+        GetOrdersRequest request)
     {
         var query = _context.Orders
             .Include(o => o.Client)
             .AsQueryable();
 
+
+        if (request.ClientId.HasValue)
+        {
+            query = query.Where(o => o.ClientId == request.ClientId.Value);
+        }
+
+
+        if (!string.IsNullOrWhiteSpace(request.Description))
+        {
+            query = query.Where(o =>
+                o.Description.Contains(request.Description));
+        }
+
         var totalItems = await query.CountAsync();
 
         var orders = await query
             .OrderBy(o => o.Id)
-            .Skip((page - 1) * pageSize)
-            .Take(pageSize)
+            .Skip((request.Page - 1) * request.PageSize)
+            .Take(request.PageSize)
             .ToListAsync();
 
         return (orders, totalItems);

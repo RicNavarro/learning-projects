@@ -257,7 +257,10 @@ public class OrderServiceTests
         };
 
         repositoryMock
-            .Setup(x => x.GetPagedAsync(1, 10))
+            .Setup(x => x.GetPagedAsync(
+                It.Is<GetOrdersRequest>(r =>
+                    r.Page == 1 &&
+                    r.PageSize == 10)))
             .ReturnsAsync((orders, 12));
 
         var service = new OrderService(
@@ -289,7 +292,10 @@ public class OrderServiceTests
         result.TotalPages.Should().Be(2);
 
         repositoryMock.Verify(
-            x => x.GetPagedAsync(1, 10),
+            x => x.GetPagedAsync(
+                It.Is<GetOrdersRequest>(r =>
+                    r.Page == 1 &&
+                    r.PageSize == 10)),
             Times.Once);
     }
 
@@ -302,7 +308,10 @@ public class OrderServiceTests
         var loggerMock = new Mock<ILogger<OrderService>>();
 
         repositoryMock
-            .Setup(x => x.GetPagedAsync(1, 10))
+            .Setup(x => x.GetPagedAsync(
+                It.Is<GetOrdersRequest>(r =>
+                    r.Page == 1 &&
+                    r.PageSize == 10)))
             .ReturnsAsync((new List<Order>(), 20));
 
         var service = new OrderService(
@@ -333,7 +342,10 @@ public class OrderServiceTests
         var loggerMock = new Mock<ILogger<OrderService>>();
 
         repositoryMock
-            .Setup(x => x.GetPagedAsync(1, 10))
+            .Setup(x => x.GetPagedAsync(
+                It.Is<GetOrdersRequest>(r =>
+                    r.Page == 1 &&
+                    r.PageSize == 10)))
             .ReturnsAsync((new List<Order>(), 21));
 
         var service = new OrderService(
@@ -364,7 +376,10 @@ public class OrderServiceTests
         var loggerMock = new Mock<ILogger<OrderService>>();
 
         repositoryMock
-            .Setup(x => x.GetPagedAsync(1, 10))
+            .Setup(x => x.GetPagedAsync(
+                It.Is<GetOrdersRequest>(r =>
+                    r.Page == 1 &&
+                    r.PageSize == 10)))
             .ReturnsAsync((new List<Order>(), 0));
 
         var service = new OrderService(
@@ -399,7 +414,10 @@ public class OrderServiceTests
         var loggerMock = new Mock<ILogger<OrderService>>();
 
         repositoryMock
-            .Setup(x => x.GetPagedAsync(3, 25))
+            .Setup(x => x.GetPagedAsync(
+                It.Is<GetOrdersRequest>(r =>
+                    r.Page == 3 &&
+                    r.PageSize == 25)))
             .ReturnsAsync((new List<Order>(), 50));
 
         var service = new OrderService(
@@ -419,7 +437,10 @@ public class OrderServiceTests
         // Assert
 
         repositoryMock.Verify(
-            x => x.GetPagedAsync(3, 25),
+            x => x.GetPagedAsync(
+                It.Is<GetOrdersRequest>(r =>
+                    r.Page == 3 &&
+                    r.PageSize == 25)),
             Times.Once);
     }
 

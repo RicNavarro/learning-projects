@@ -77,9 +77,7 @@ namespace OrderFlow.Api.Services
                 request.Page,
                 request.PageSize);
 
-            var (orders, totalItems) = await _repository.GetPagedAsync(
-                request.Page,
-                request.PageSize);
+            var (orders, totalItems) = await _repository.GetPagedAsync(request);
 
             return PagedResponse<OrderResponse>.Create(
                 orders.Select(o => o.ToResponse()),

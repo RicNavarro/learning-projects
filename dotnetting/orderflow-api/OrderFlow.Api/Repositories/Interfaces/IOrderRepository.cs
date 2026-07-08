@@ -1,4 +1,5 @@
 using OrderFlow.Api.Models;
+using OrderFlow.Api.DTOs.Requests;
 
 namespace OrderFlow.Api.Repositories.Interfaces;
 
@@ -13,8 +14,7 @@ public interface IOrderRepository
     Task<bool> ClientExistsAsync(int clientId);
 
     Task<(IEnumerable<Order> Orders, int TotalItems)> GetPagedAsync(
-        int page,
-        int pageSize);
+        GetOrdersRequest request);
 
     Task SaveChangesAsync();
 }
