@@ -23,5 +23,12 @@ public class GetOrdersRequestValidator : AbstractValidator<GetOrdersRequest>
             .GreaterThan(0)
             .When(x => x.ClientId.HasValue)
             .WithMessage("O cliente deve ser maior que zero.");
+
+        RuleFor(x => x.SortDirection)
+            .Must(direction =>
+                direction == null ||
+                direction.Equals("asc", StringComparison.OrdinalIgnoreCase) ||
+                direction.Equals("desc", StringComparison.OrdinalIgnoreCase))
+            .WithMessage("SortDirection deve ser 'asc' ou 'desc'.");
     }
 }

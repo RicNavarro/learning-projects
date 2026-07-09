@@ -58,10 +58,11 @@ public class OrderRepository : IOrderRepository
 
         query = ApplyFilters(query, request);
 
+        query = ApplySorting(query, request);
+
         var totalItems = await query.CountAsync();
 
         var orders = await query
-            .OrderBy(o => o.Id)
             .Skip((request.Page - 1) * request.PageSize)
             .Take(request.PageSize)
             .ToListAsync();
@@ -94,6 +95,30 @@ public class OrderRepository : IOrderRepository
         }
 
         return query;
+    }
+
+    private IQueryable<Order> ApplySorting(
+        IQueryable<Order> query,
+        GetOrdersRequest request)
+    {
+        var descending = request.SortDirection?.Equals(
+            "desc",
+            StringComparison.OrdinalIgnoreCase) == true;
+
+        return request.SortBy?.ToLower() switch
+        {
+            "description" => descending
+                ? query.OrderByDescending(o => o.Description)
+                : query.OrderBy(o => o.Description),
+
+            "clientid" => descending
+                ? query.OrderByDescending(o => o.ClientId)
+                : query.OrderBy(o => o.ClientId),
+
+            _ => descending
+                ? query.OrderByDescending(o => o.Id)
+                : query.OrderBy(o => o.Id)
+        };
     }
 
 }
