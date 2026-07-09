@@ -56,17 +56,7 @@ public class OrderRepository : IOrderRepository
             .AsQueryable();
 
 
-        if (request.ClientId.HasValue)
-        {
-            query = query.Where(o => o.ClientId == request.ClientId.Value);
-        }
-
-
-        if (!string.IsNullOrWhiteSpace(request.Description))
-        {
-            query = query.Where(o =>
-                o.Description.Contains(request.Description));
-        }
+        query = ApplyFilters(query, request);
 
         var totalItems = await query.CountAsync();
 
@@ -82,6 +72,28 @@ public class OrderRepository : IOrderRepository
     public async Task SaveChangesAsync()
     {
         await _context.SaveChangesAsync();
+    }
+
+
+    private IQueryable<Order> ApplyFilters(
+    IQueryable<Order> query,
+    GetOrdersRequest request)
+    {
+        if (request.ClientId.HasValue)
+        {
+            query = query.Where(o =>
+                o.ClientId == request.ClientId.Value);
+        }
+
+        if (!string.IsNullOrWhiteSpace(request.Description))
+        {
+            query = query.Where(o =>
+                EF.Functions.Like(
+                    o.Description,
+                    $"%{request.Description}%"));
+        }
+
+        return query;
     }
 
 }
