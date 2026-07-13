@@ -11,7 +11,8 @@ namespace OrderFlow.Api.Mappings
             {
                 Id = order.Id,
                 Description = order.Description,
-                ClientId = order.ClientId
+                ClientId = order.ClientId,
+                Status = order.Status
             };
         }
     }

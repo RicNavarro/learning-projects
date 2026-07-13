@@ -40,7 +40,8 @@ namespace OrderFlow.Api.Services
             var order = new Order
             {
                 Description = request.Description,
-                ClientId = request.ClientId
+                ClientId = request.ClientId,
+                Status = OrderStatus.Pending
             };
 
             await _repository.AddAsync(order);
