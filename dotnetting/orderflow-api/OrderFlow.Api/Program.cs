@@ -54,7 +54,14 @@ builder.Services.AddAuthorization();
 
 // Environment
 builder.Services.AddEndpointsApiExplorer();
-builder.Services.AddSwaggerGen();
+builder.Services.AddSwaggerGen(options =>
+{
+    var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
+
+    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
+
+    options.IncludeXmlComments(xmlPath);
+});
 
 // Dependency Injection (DI)
 builder.Services.AddScoped<IClientService, ClientService>();

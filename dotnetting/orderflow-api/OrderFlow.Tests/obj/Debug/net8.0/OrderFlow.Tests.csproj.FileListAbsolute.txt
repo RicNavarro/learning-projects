@@ -156,3 +156,4 @@
 /home/ricardonavarro/HDD/Files/dev/study/learning/dotnetting/orderflow-api/OrderFlow.Tests/obj/Debug/net8.0/ref/OrderFlow.Tests.dll
 /home/ricardonavarro/HDD/Files/dev/study/learning/dotnetting/orderflow-api/OrderFlow.Tests/bin/Debug/net8.0/Castle.Core.dll
 /home/ricardonavarro/HDD/Files/dev/study/learning/dotnetting/orderflow-api/OrderFlow.Tests/bin/Debug/net8.0/Moq.dll
+/home/ricardonavarro/HDD/Files/dev/study/learning/dotnetting/orderflow-api/OrderFlow.Tests/bin/Debug/net8.0/OrderFlow.Api.xml

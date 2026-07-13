@@ -7,6 +7,7 @@ namespace OrderFlow.Api.Models
     {
         public int Id { get; set; }
         public string Description { get; set; } = string.Empty;
+        public OrderStatus Status { get; set; } = OrderStatus.Pending;
         public int ClientId { get; set; }
     
         [JsonIgnore] // Isso evita que o pedido tente renderizar o cliente de volta

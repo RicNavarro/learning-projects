@@ -316,3 +316,5 @@
 /home/ricardonavarro/HDD/Files/dev/study/learning/dotnetting/orderflow-api/OrderFlow.Api/obj/Debug/net8.0/OrderFlow.Api.pdb
 /home/ricardonavarro/HDD/Files/dev/study/learning/dotnetting/orderflow-api/OrderFlow.Api/obj/Debug/net8.0/OrderFlow.Api.genruntimeconfig.cache
 /home/ricardonavarro/HDD/Files/dev/study/learning/dotnetting/orderflow-api/OrderFlow.Api/obj/Debug/net8.0/ref/OrderFlow.Api.dll
+/home/ricardonavarro/HDD/Files/dev/study/learning/dotnetting/orderflow-api/OrderFlow.Api/bin/Debug/net8.0/OrderFlow.Api.xml
+/home/ricardonavarro/HDD/Files/dev/study/learning/dotnetting/orderflow-api/OrderFlow.Api/obj/Debug/net8.0/OrderFlow.Api.xml

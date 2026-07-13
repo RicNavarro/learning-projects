@@ -32,13 +32,18 @@ namespace OrderFlow.Api.Controllers
         }
 
 
-        //READ
-        [HttpGet("{id}")]
-        public async Task<IActionResult> GetById(int id)
-        {
-            var order = await _service.GetByIdAsync(id);
-            return Ok(order);
-        }
+        // READ
+
+        /// <summary>
+        /// Lista pedidos com suporte a paginação, filtros e ordenação.
+        /// </summary>
+        /// <param name="request">
+        /// Parâmetros utilizados para paginação, filtros e ordenação.
+        /// </param>
+        /// <returns>Uma lista paginada de pedidos.</returns>
+        /// <response code="200">Pedidos retornados com sucesso.</response>
+        /// <response code="400">Parâmetros inválidos.</response>
+
 
         [HttpGet]
         public async Task<ActionResult<PagedResponse<OrderResponse>>> GetOrders(
@@ -56,6 +61,15 @@ namespace OrderFlow.Api.Controllers
             var updated = await _service.UpdateAsync(id, request);
             return Ok(updated);
         }
+
+        [HttpGet("{id:int}")]
+        public async Task<ActionResult<OrderResponse>> GetById(int id)
+        {
+            var order = await _service.GetByIdAsync(id);
+
+            return Ok(order);
+        }
+
 
         // DELETE
         [HttpDelete("{id}")]
