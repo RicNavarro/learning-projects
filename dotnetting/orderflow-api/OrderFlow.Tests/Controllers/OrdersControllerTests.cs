@@ -33,7 +33,8 @@ public class OrdersControllerTests
         var result = await controller.GetById(1);
 
         // Assert
-        var okResult = result.Should()
+        var okResult = result.Result
+            .Should()
             .BeOfType<OkObjectResult>()
             .Subject;
 

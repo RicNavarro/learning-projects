@@ -17,22 +17,23 @@
 //GET http://localhost:5130/api/orders?sortBy=description
 //GET http://localhost:5130/api/orders?sortBy=description&sortDirection=desc
 //GET http://localhost:5130/api/orders?sortBy=clientId
+//GET http://localhost:5130/api/orders?sortBy=banana
 
 
-GET http://localhost:5130/api/orders?sortBy=banana
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhZG1pbkBvcmRlcmZsb3cuY29tIiwiZXhwIjoxNzgzNjAyMjYwLCJpc3MiOiJPcmRlckZsb3ciLCJhdWQiOiJPcmRlckZsb3dVc2VycyJ9.IFGs01mjXtl22ZicY5OP9DAkZJv1oOBARarFCm0zWTE
+GET http://localhost:5130/api/orders?status=1
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhZG1pbkBvcmRlcmZsb3cuY29tIiwiZXhwIjoxNzg0MDM1NTY5LCJpc3MiOiJPcmRlckZsb3ciLCJhdWQiOiJPcmRlckZsb3dVc2VycyJ9.-coQTkk8XUlOlm8tYmwf4Op33Y-m9WQm_zUtCvkxe4s
 
 
 
 ### Criar pedido
 
 POST http://localhost:5130/api/orders
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhZG1pbkBvcmRlcmZsb3cuY29tIiwiZXhwIjoxNzgzNTIzODk2LCJpc3MiOiJPcmRlckZsb3ciLCJhdWQiOiJPcmRlckZsb3dVc2VycyJ9.RVWAgL7D4FraAIrxkFzvfKZcUtEFBfMojyHiinAHLvk
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhZG1pbkBvcmRlcmZsb3cuY29tIiwiZXhwIjoxNzg0MDM1NTY5LCJpc3MiOiJPcmRlckZsb3ciLCJhdWQiOiJPcmRlckZsb3dVc2VycyJ9.-coQTkk8XUlOlm8tYmwf4Op33Y-m9WQm_zUtCvkxe4s
 Content-Type: application/json
 
 {
-    "description": "Sonic Superstars",
-    "clientId": 2
+    "description": "Sonic Adventure",
+    "clientId": 1
 }
 
 

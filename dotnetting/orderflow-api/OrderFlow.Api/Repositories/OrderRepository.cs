@@ -94,6 +94,11 @@ public class OrderRepository : IOrderRepository
                     $"%{request.Description}%"));
         }
 
+        if (request.Status.HasValue)
+        {
+            query = query.Where(o =>
+                o.Status == request.Status.Value);
+        }
         return query;
     }
 

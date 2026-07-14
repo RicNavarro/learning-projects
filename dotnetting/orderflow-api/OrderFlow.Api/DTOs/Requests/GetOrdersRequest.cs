@@ -1,3 +1,5 @@
+using OrderFlow.Api.Models;
+
 namespace OrderFlow.Api.DTOs.Requests;
 
 public class GetOrdersRequest
@@ -9,6 +11,8 @@ public class GetOrdersRequest
     public int? ClientId { get; set; }
 
     public string? Description { get; set; }
+
+    public OrderStatus? Status { get; set; }
 
     public string? SortBy { get; set; }
 

@@ -4,6 +4,17 @@
         <name>OrderFlow.Api</name>
     </assembly>
     <members>
+        <member name="M:OrderFlow.Api.Controllers.OrdersController.GetOrders(OrderFlow.Api.DTOs.Requests.GetOrdersRequest)">
+            <summary>
+            Lista pedidos com suporte a paginação, filtros e ordenação.
+            </summary>
+            <param name="request">
+            Parâmetros utilizados para paginação, filtros e ordenação.
+            </param>
+            <returns>Uma lista paginada de pedidos.</returns>
+            <response code="200">Pedidos retornados com sucesso.</response>
+            <response code="400">Parâmetros inválidos.</response>
+        </member>
         <member name="T:OrderFlow.Api.Migrations.InitialCreate">
             <inheritdoc />
         </member>
@@ -26,6 +37,18 @@
             <inheritdoc />
         </member>
         <member name="M:OrderFlow.Api.Migrations.AddOrders.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="T:OrderFlow.Api.Migrations.AddOrderStatus">
+            <inheritdoc />
+        </member>
+        <member name="M:OrderFlow.Api.Migrations.AddOrderStatus.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:OrderFlow.Api.Migrations.AddOrderStatus.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:OrderFlow.Api.Migrations.AddOrderStatus.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
     </members>

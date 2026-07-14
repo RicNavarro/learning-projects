@@ -24,6 +24,11 @@ public class GetOrdersRequestValidator : AbstractValidator<GetOrdersRequest>
             .When(x => x.ClientId.HasValue)
             .WithMessage("O cliente deve ser maior que zero.");
 
+        RuleFor(x => x.Status)
+            .IsInEnum()
+            .When(x => x.Status.HasValue)
+            .WithMessage("Status inválido.");
+
         RuleFor(x => x.SortDirection)
             .Must(direction =>
                 direction == null ||
