@@ -41,7 +41,8 @@ namespace OrderFlow.Api.Services
             {
                 Description = request.Description,
                 ClientId = request.ClientId,
-                Status = OrderStatus.Pending
+                Status = OrderStatus.Pending,
+                Amount = request.Amount
             };
 
             await _repository.AddAsync(order);
@@ -112,6 +113,7 @@ namespace OrderFlow.Api.Services
 
             order.Description = request.Description;
             order.ClientId = request.ClientId;
+            order.Amount = request.Amount;
 
             await _repository.SaveChangesAsync();
 

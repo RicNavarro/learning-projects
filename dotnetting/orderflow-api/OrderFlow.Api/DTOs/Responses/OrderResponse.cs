@@ -8,5 +8,6 @@ namespace OrderFlow.Api.DTOs.Responses
         public string Description { get; set; } = string.Empty;
         public int ClientId { get; set; }
         public OrderStatus Status { get; set; }
+        public decimal Amount { get; set; }
     }
 }

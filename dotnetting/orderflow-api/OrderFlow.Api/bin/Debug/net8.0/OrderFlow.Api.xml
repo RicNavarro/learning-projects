@@ -51,5 +51,17 @@
         <member name="M:OrderFlow.Api.Migrations.AddOrderStatus.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
             <inheritdoc />
         </member>
+        <member name="T:OrderFlow.Api.Migrations.AddOrderAmount">
+            <inheritdoc />
+        </member>
+        <member name="M:OrderFlow.Api.Migrations.AddOrderAmount.Up(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:OrderFlow.Api.Migrations.AddOrderAmount.Down(Microsoft.EntityFrameworkCore.Migrations.MigrationBuilder)">
+            <inheritdoc />
+        </member>
+        <member name="M:OrderFlow.Api.Migrations.AddOrderAmount.BuildTargetModel(Microsoft.EntityFrameworkCore.ModelBuilder)">
+            <inheritdoc />
+        </member>
     </members>
 </doc>
