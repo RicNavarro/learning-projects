@@ -99,6 +99,19 @@ public class OrderRepository : IOrderRepository
             query = query.Where(o =>
                 o.Status == request.Status.Value);
         }
+
+        if (request.MinAmount.HasValue)
+        {
+            query = query.Where(o =>
+                o.Amount >= request.MinAmount.Value);
+        }
+
+        if (request.MaxAmount.HasValue)
+        {
+            query = query.Where(o =>
+                o.Amount <= request.MaxAmount.Value);
+        }
+
         return query;
     }
 

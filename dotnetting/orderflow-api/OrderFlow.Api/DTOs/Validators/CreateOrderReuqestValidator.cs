@@ -14,7 +14,7 @@ namespace OrderFlow.Api.DTOs.Validators
             RuleFor(x => x.ClientId)
                 .GreaterThan(0).WithMessage("Um cliente válido deve ser associado ao pedido.");
 
-                RuleFor(x => x.Amount)
+            RuleFor(x => x.Amount)
                 .GreaterThan(0).WithMessage("O valor do pedido deve ser maior que zero.");
         }
     }

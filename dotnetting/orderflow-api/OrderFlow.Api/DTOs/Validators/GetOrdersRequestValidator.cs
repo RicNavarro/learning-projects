@@ -35,5 +35,22 @@ public class GetOrdersRequestValidator : AbstractValidator<GetOrdersRequest>
                 direction.Equals("asc", StringComparison.OrdinalIgnoreCase) ||
                 direction.Equals("desc", StringComparison.OrdinalIgnoreCase))
             .WithMessage("SortDirection deve ser 'asc' ou 'desc'.");
+
+        RuleFor(x => x.MinAmount)
+                .GreaterThanOrEqualTo(0)
+                .When(x => x.MinAmount.HasValue)
+                .WithMessage("O valor mínimo deve ser maior ou igual a zero.");
+                
+        RuleFor(x => x.MaxAmount)
+            .GreaterThanOrEqualTo(0)
+            .When(x => x.MaxAmount.HasValue)
+            .WithMessage("O valor máximo deve ser maior ou igual a zero.");
+
+        RuleFor(x => x)
+            .Must(x =>
+                !x.MinAmount.HasValue ||
+                !x.MaxAmount.HasValue ||
+                x.MinAmount <= x.MaxAmount)
+            .WithMessage("O valor mínimo não pode ser maior que o valor máximo.");
     }
 }

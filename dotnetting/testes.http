@@ -18,9 +18,15 @@
 //GET http://localhost:5130/api/orders?sortBy=description&sortDirection=desc
 //GET http://localhost:5130/api/orders?sortBy=clientId
 //GET http://localhost:5130/api/orders?sortBy=banana
+//GET http://localhost:5130/api/orders?status=1
+
+// GET /api/orders?minAmount=100
+// GET /api/orders?maxAmount=500
+// GET /api/orders?minAmount=100&maxAmount=500
+// GET /api/orders?status=Pending&minAmount=100
 
 
-GET http://localhost:5130/api/orders?status=1
+GET http://localhost:5130/api/orders?status=Pending&minAmount=100
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhZG1pbkBvcmRlcmZsb3cuY29tIiwiZXhwIjoxNzg0MTE3MjA4LCJpc3MiOiJPcmRlckZsb3ciLCJhdWQiOiJPcmRlckZsb3dVc2VycyJ9.r48-cal29cruURWidxWw1df3B7UEU5ApedluHEvytTs
 
 
@@ -32,8 +38,8 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hc
 Content-Type: application/json
 
 {
-    "description": "Macbook Pro 14",
-    "amount": 9899.99,
+    "description": "Sonic Frontiers: Definitive Edition",
+    "amount": 350,
     "clientId": 2
 }
 

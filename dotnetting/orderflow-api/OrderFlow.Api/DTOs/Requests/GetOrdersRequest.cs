@@ -14,6 +14,10 @@ public class GetOrdersRequest
 
     public OrderStatus? Status { get; set; }
 
+    public decimal? MinAmount { get; set; }
+
+    public decimal? MaxAmount { get; set; }
+
     public string? SortBy { get; set; }
 
     public string? SortDirection { get; set; }
