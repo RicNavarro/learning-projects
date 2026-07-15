@@ -444,6 +444,36 @@ public class OrderServiceTests
             Times.Once);
     }
 
+    [Fact]
+    public async Task Create_ShouldAcceptPositiveAmount()
+    {
+        // Arrange
 
+        var repositoryMock = new Mock<IOrderRepository>();
+        var loggerMock = new Mock<ILogger<OrderService>>();
+
+        repositoryMock
+            .Setup(x => x.ClientExistsAsync(1))
+            .ReturnsAsync(true);
+
+        var service = new OrderService(
+            repositoryMock.Object,
+            loggerMock.Object);
+
+        var request = new CreateOrderRequest
+        {
+            Description = "Pedido Teste",
+            ClientId = 1,
+            Amount = 150.50m
+        };
+
+        // Act
+
+        var result = await service.CreateAsync(request);
+
+        // Assert
+
+        result.Amount.Should().Be(150.50m);
+    }
 
 }

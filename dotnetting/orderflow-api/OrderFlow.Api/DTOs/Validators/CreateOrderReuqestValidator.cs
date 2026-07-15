@@ -12,6 +12,10 @@ namespace OrderFlow.Api.DTOs.Validators
                 .MinimumLength(5).WithMessage("A descrição deve ser mais detalhada.");
 
             RuleFor(x => x.ClientId)
-                .GreaterThan(0).WithMessage("Um cliente válido deve ser associado ao pedido.");}
+                .GreaterThan(0).WithMessage("Um cliente válido deve ser associado ao pedido.");
+
+                RuleFor(x => x.Amount)
+                .GreaterThan(0).WithMessage("O valor do pedido deve ser maior que zero.");
+        }
     }
 }
