@@ -1,3 +1,4 @@
+using Microsoft.Data.Sqlite;
 using Microsoft.EntityFrameworkCore;
 using OrderFlow.Api.Data;
 
@@ -7,11 +8,19 @@ public static class DbContextFactory
 {
     public static AppDbContext Create()
     {
+        var connection = new SqliteConnection("DataSource=:memory:");
+
+        connection.Open();
+
         var options =
             new DbContextOptionsBuilder<AppDbContext>()
-                .UseInMemoryDatabase(Guid.NewGuid().ToString())
+                .UseSqlite(connection)
                 .Options;
 
-        return new AppDbContext(options);
+        var context = new AppDbContext(options);
+
+        context.Database.EnsureCreated();
+
+        return context;
     }
 }
