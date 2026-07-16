@@ -299,112 +299,7 @@ public class OrderServiceTests
             Times.Once);
     }
 
-    [Fact]
-    public async Task GetPaged_ShouldCalculateTotalPages_WhenDivisionIsExact()
-    {
-        // Arrange
-
-        var repositoryMock = new Mock<IOrderRepository>();
-        var loggerMock = new Mock<ILogger<OrderService>>();
-
-        repositoryMock
-            .Setup(x => x.GetPagedAsync(
-                It.Is<GetOrdersRequest>(r =>
-                    r.Page == 1 &&
-                    r.PageSize == 10)))
-            .ReturnsAsync((new List<Order>(), 20));
-
-        var service = new OrderService(
-            repositoryMock.Object,
-            loggerMock.Object);
-
-        var request = new GetOrdersRequest
-        {
-            Page = 1,
-            PageSize = 10
-        };
-
-        // Act
-
-        var result = await service.GetPagedAsync(request);
-
-        // Assert
-
-        result.TotalPages.Should().Be(2);
-    }
-
-    [Fact]
-    public async Task GetPaged_ShouldRoundUpTotalPages_WhenDivisionHasRemainder()
-    {
-        // Arrange
-
-        var repositoryMock = new Mock<IOrderRepository>();
-        var loggerMock = new Mock<ILogger<OrderService>>();
-
-        repositoryMock
-            .Setup(x => x.GetPagedAsync(
-                It.Is<GetOrdersRequest>(r =>
-                    r.Page == 1 &&
-                    r.PageSize == 10)))
-            .ReturnsAsync((new List<Order>(), 21));
-
-        var service = new OrderService(
-            repositoryMock.Object,
-            loggerMock.Object);
-
-        var request = new GetOrdersRequest
-        {
-            Page = 1,
-            PageSize = 10
-        };
-
-        // Act
-
-        var result = await service.GetPagedAsync(request);
-
-        // Assert
-
-        result.TotalPages.Should().Be(3);
-    }    
-
-    [Fact]
-    public async Task GetPaged_ShouldReturnZeroTotalPages_WhenThereAreNoOrders()
-    {
-        // Arrange
-
-        var repositoryMock = new Mock<IOrderRepository>();
-        var loggerMock = new Mock<ILogger<OrderService>>();
-
-        repositoryMock
-            .Setup(x => x.GetPagedAsync(
-                It.Is<GetOrdersRequest>(r =>
-                    r.Page == 1 &&
-                    r.PageSize == 10)))
-            .ReturnsAsync((new List<Order>(), 0));
-
-        var service = new OrderService(
-            repositoryMock.Object,
-            loggerMock.Object);
-
-        var request = new GetOrdersRequest
-        {
-            Page = 1,
-            PageSize = 10
-        };
-
-        // Act
-
-        var result = await service.GetPagedAsync(request);
-
-        // Assert
-
-        result.Items.Should().BeEmpty();
-
-        result.TotalItems.Should().Be(0);
-
-        result.TotalPages.Should().Be(0);
-    }
-
+    
     [Fact]
     public async Task GetPaged_ShouldPassPaginationParametersToRepository()
     {
@@ -475,5 +370,45 @@ public class OrderServiceTests
 
         result.Amount.Should().Be(150.50m);
     }
+
+    [Theory]
+    [InlineData(20, 10, 2)]
+    [InlineData(21, 10, 3)]
+    [InlineData(0, 10, 0)]
+    [InlineData(1, 10, 1)]
+    [InlineData(99, 25, 4)]
+    public async Task GetPaged_ShouldCalculateTotalPages(
+        int totalItems,
+        int pageSize,
+        int expectedPages)
+    {
+        // Arrange
+
+        var repositoryMock = new Mock<IOrderRepository>();
+        var loggerMock = new Mock<ILogger<OrderService>>();
+
+        repositoryMock
+            .Setup(x => x.GetPagedAsync(It.IsAny<GetOrdersRequest>()))
+            .ReturnsAsync((new List<Order>(), totalItems));
+
+        var service = new OrderService(
+            repositoryMock.Object,
+            loggerMock.Object);
+
+        var request = new GetOrdersRequest
+        {
+            Page = 1,
+            PageSize = pageSize
+        };
+
+        // Act
+
+        var result = await service.GetPagedAsync(request);
+
+        // Assert
+
+        result.TotalPages.Should().Be(expectedPages);
+    }
+
 
 }
