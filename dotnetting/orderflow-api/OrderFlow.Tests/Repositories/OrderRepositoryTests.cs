@@ -326,4 +326,127 @@ public class OrderRepositoryTests
 
         orders.First().Amount.Should().Be(100);
     }
+
+    [Fact]
+    public async Task GetPaged_ShouldSortByAmountAscending()
+    {
+        // Arrange
+
+        var context = DbContextFactory.Create();
+
+        var client = new Client
+        {
+            Name = "Cliente Teste"
+        };
+
+        context.Clients.Add(client);
+        await context.SaveChangesAsync();
+
+        context.Orders.AddRange(
+            new Order
+            {
+                Description = "Pedido A",
+                ClientId = client.Id,
+                Amount = 900,
+                Status = OrderStatus.Pending
+            },
+            new Order
+            {
+                Description = "Pedido B",
+                ClientId = client.Id,
+                Amount = 200,
+                Status = OrderStatus.Pending
+            },
+            new Order
+            {
+                Description = "Pedido C",
+                ClientId = client.Id,
+                Amount = 500,
+                Status = OrderStatus.Pending
+            });
+
+        await context.SaveChangesAsync();
+
+        var repository = new OrderRepository(context);
+
+        var request = new GetOrdersRequest
+        {
+            SortBy = "amount",
+            SortDirection = "asc",
+            Page = 1,
+            PageSize = 10
+        };
+
+        // Act
+
+        var (orders, _) = await repository.GetPagedAsync(request);
+
+        // Assert
+
+        orders.Select(o => o.Amount)
+            .Should()
+            .Equal(200, 500, 900);
+    }
+
+    [Fact]
+    public async Task GetPaged_ShouldSortByAmountDescending()
+    {
+        // Arrange
+
+        var context = DbContextFactory.Create();
+
+        var client = new Client
+        {
+            Name = "Cliente Teste"
+        };
+
+        context.Clients.Add(client);
+        await context.SaveChangesAsync();
+
+        context.Orders.AddRange(
+            new Order
+            {
+                Description = "Pedido A",
+                ClientId = client.Id,
+                Amount = 900,
+                Status = OrderStatus.Pending
+            },
+            new Order
+            {
+                Description = "Pedido B",
+                ClientId = client.Id,
+                Amount = 200,
+                Status = OrderStatus.Pending
+            },
+            new Order
+            {
+                Description = "Pedido C",
+                ClientId = client.Id,
+                Amount = 500,
+                Status = OrderStatus.Pending
+            });
+
+        await context.SaveChangesAsync();
+
+        var repository = new OrderRepository(context);
+
+        var request = new GetOrdersRequest
+        {
+            SortBy = "amount",
+            SortDirection = "desc",
+            Page = 1,
+            PageSize = 10
+        };
+
+        // Act
+
+        var (orders, _) = await repository.GetPagedAsync(request);
+
+        // Assert
+
+        orders.Select(o => o.Amount)
+            .Should()
+            .Equal(900, 500, 200);
+    }
+
 }
