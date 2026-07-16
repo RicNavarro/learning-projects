@@ -133,6 +133,14 @@ public class OrderRepository : IOrderRepository
                 ? query.OrderByDescending(o => o.ClientId)
                 : query.OrderBy(o => o.ClientId),
 
+            "status" => descending
+                ? query.OrderByDescending(o => o.Status)
+                : query.OrderBy(o => o.Status),
+
+            "amount" => descending
+                ? query.OrderByDescending(o => o.Amount)
+                : query.OrderBy(o => o.Amount),
+
             _ => descending
                 ? query.OrderByDescending(o => o.Id)
                 : query.OrderBy(o => o.Id)
