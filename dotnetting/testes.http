@@ -1,9 +1,9 @@
 //renovar o token
 
-curl -X POST http://localhost:5130/api/auth/login -H "Content-Type: application/json" -d '{
-"email":"admin@orderflow.com",
-"password":"001122"
-}'
+//curl -X POST http://localhost:5130/api/auth/login -H "Content-Type: application/json" -d '{
+//"email":"admin@orderflow.com",
+//"password":"001122"
+//}'
 
 
 

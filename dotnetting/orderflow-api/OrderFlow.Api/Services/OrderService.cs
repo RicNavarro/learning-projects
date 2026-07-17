@@ -7,6 +7,7 @@ using OrderFlow.Api.Mappings;
 using OrderFlow.Api.Repositories.Interfaces;
 using OrderFlow.Api.Exceptions;
 using Microsoft.Extensions.Caching.Memory;
+using Microsoft.Extensions.Primitives;
 
 namespace OrderFlow.Api.Services
 {
@@ -15,7 +16,7 @@ namespace OrderFlow.Api.Services
         private readonly IOrderRepository _repository;
         private readonly ILogger<OrderService> _logger;
         private readonly IMemoryCache _cache;
-
+        private static CancellationTokenSource _ordersCacheTokenSource = new();
 
         public OrderService(
             IOrderRepository repository,
@@ -52,6 +53,7 @@ namespace OrderFlow.Api.Services
 
             await _repository.AddAsync(order);
             await _repository.SaveChangesAsync();
+            InvalidateOrdersCache();
 
             _logger.LogInformation("Pedido {OrderId} para cliente {ClientId}", order.Id, request.ClientId);
 
@@ -112,7 +114,11 @@ namespace OrderFlow.Api.Services
             _cache.Set(
                 cacheKey,
                 response,
-                TimeSpan.FromMinutes(5));
+                new MemoryCacheEntryOptions()
+                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(5))
+                    .AddExpirationToken(
+                        new CancellationChangeToken(
+                            _ordersCacheTokenSource.Token)));
 
             return response;
         }
@@ -145,6 +151,7 @@ namespace OrderFlow.Api.Services
             order.Amount = request.Amount;
 
             await _repository.SaveChangesAsync();
+            InvalidateOrdersCache();
 
             return order.ToResponse();
         }
@@ -165,10 +172,22 @@ namespace OrderFlow.Api.Services
             }
                 
             await _repository.SaveChangesAsync();
+            InvalidateOrdersCache();
 
         }
 
 
+
+
+        private void InvalidateOrdersCache()
+        {
+            _ordersCacheTokenSource.Cancel();
+            _ordersCacheTokenSource.Dispose();
+
+            _ordersCacheTokenSource = new CancellationTokenSource();
+
+            _logger.LogInformation("Cache de pedidos invalidado.");
+        }
 
     }
 }
