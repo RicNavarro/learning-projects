@@ -6,6 +6,7 @@ using OrderFlow.Api.Services.Interfaces;
 using OrderFlow.Api.Mappings;
 using OrderFlow.Api.Repositories.Interfaces;
 using OrderFlow.Api.Exceptions;
+using Microsoft.Extensions.Caching.Memory;
 
 namespace OrderFlow.Api.Services
 {
@@ -13,13 +14,17 @@ namespace OrderFlow.Api.Services
     {
         private readonly IOrderRepository _repository;
         private readonly ILogger<OrderService> _logger;
+        private readonly IMemoryCache _cache;
+
 
         public OrderService(
             IOrderRepository repository,
-            ILogger<OrderService> logger)
+            ILogger<OrderService> logger,
+            IMemoryCache cache)
         {
             _repository = repository;
             _logger = logger;
+            _cache = cache;
         }
 
 
@@ -79,13 +84,37 @@ namespace OrderFlow.Api.Services
                 request.Page,
                 request.PageSize);
 
+            var cacheKey =
+                $"orders:{request.Page}:{request.PageSize}:{request.ClientId}:{request.Description}:{request.SortBy}:{request.SortDirection}";
+
+            if (_cache.TryGetValue(cacheKey, out PagedResponse<OrderResponse>? cachedResponse))
+            {
+                _logger.LogInformation(
+                    "Cache HIT para {CacheKey}",
+                    cacheKey);
+
+                return cachedResponse!;
+            }
+
+            _logger.LogInformation(
+                "Cache MISS para {CacheKey}",
+                cacheKey);
+
+
             var (orders, totalItems) = await _repository.GetPagedAsync(request);
 
-            return PagedResponse<OrderResponse>.Create(
+            var response = PagedResponse<OrderResponse>.Create(
                 orders.Select(o => o.ToResponse()),
                 request.Page,
                 request.PageSize,
                 totalItems);
+
+            _cache.Set(
+                cacheKey,
+                response,
+                TimeSpan.FromMinutes(5));
+
+            return response;
         }
 
 

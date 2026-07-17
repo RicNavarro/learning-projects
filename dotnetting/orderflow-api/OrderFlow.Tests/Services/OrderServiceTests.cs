@@ -8,6 +8,7 @@ using OrderFlow.Tests.Helpers;
 using OrderFlow.Api.Repositories.Interfaces;
 using OrderFlow.Api.Exceptions;
 using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Caching.Memory;
 
 public class OrderServiceTests
 {
@@ -32,7 +33,8 @@ public class OrderServiceTests
 
         var service = new OrderService(
             repositoryMock.Object,
-            loggerMock.Object);
+            loggerMock.Object,
+            CreateMemoryCache());
 
         // Act
 
@@ -50,6 +52,11 @@ public class OrderServiceTests
         );
     }
 
+    private static IMemoryCache CreateMemoryCache()
+    {
+        return new MemoryCache(new MemoryCacheOptions());
+    }
+
     [Fact]
     public async Task GetById_ShouldThrowNotFoundException_WhenOrderDoesNotExist()
     {
@@ -65,7 +72,8 @@ public class OrderServiceTests
 
         var service = new OrderService(
             repositoryMock.Object,
-            loggerMock.Object);
+            loggerMock.Object,
+            CreateMemoryCache());
 
         Func<Task> action = async () =>
             await service.GetByIdAsync(999);
@@ -93,7 +101,8 @@ public class OrderServiceTests
 
         var service = new OrderService(
             repositoryMock.Object,
-            loggerMock.Object);
+            loggerMock.Object,
+            CreateMemoryCache());
 
         var request = new CreateOrderRequest
         {
@@ -138,7 +147,8 @@ public class OrderServiceTests
 
         var service = new OrderService(
             repositoryMock.Object,
-            loggerMock.Object);
+            loggerMock.Object,
+            CreateMemoryCache());
 
         var request =
         new CreateOrderRequest
@@ -174,7 +184,8 @@ public class OrderServiceTests
 
         var service = new OrderService(
             repositoryMock.Object,
-            loggerMock.Object);
+            loggerMock.Object,
+            CreateMemoryCache());
 
         Func<Task> action = async () =>
             await service.DeleteAsync(999);
@@ -203,7 +214,8 @@ public class OrderServiceTests
 
         var service = new OrderService(
             repositoryMock.Object,
-            loggerMock.Object);
+            loggerMock.Object,
+            CreateMemoryCache());
             
         //Act
 
@@ -265,7 +277,8 @@ public class OrderServiceTests
 
         var service = new OrderService(
             repositoryMock.Object,
-            loggerMock.Object);
+            loggerMock.Object,
+            CreateMemoryCache());
 
         var request = new GetOrdersRequest
         {
@@ -317,7 +330,8 @@ public class OrderServiceTests
 
         var service = new OrderService(
             repositoryMock.Object,
-            loggerMock.Object);
+            loggerMock.Object,
+            CreateMemoryCache());
 
         var request = new GetOrdersRequest
         {
@@ -353,7 +367,8 @@ public class OrderServiceTests
 
         var service = new OrderService(
             repositoryMock.Object,
-            loggerMock.Object);
+            loggerMock.Object,
+            CreateMemoryCache());
 
         var request = new CreateOrderRequest
         {
@@ -393,7 +408,8 @@ public class OrderServiceTests
 
         var service = new OrderService(
             repositoryMock.Object,
-            loggerMock.Object);
+            loggerMock.Object,
+            CreateMemoryCache());
 
         var request = new GetOrdersRequest
         {

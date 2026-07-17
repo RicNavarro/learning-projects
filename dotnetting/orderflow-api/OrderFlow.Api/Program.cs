@@ -82,6 +82,7 @@ builder.Services.AddExceptionHandler<GlobalExceptionHandler>();
 builder.Services.AddScoped<IAuthService, AuthService>();
 
 // Repositorios
+builder.Services.AddMemoryCache();
 builder.Services.AddScoped<IClientRepository, ClientRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
