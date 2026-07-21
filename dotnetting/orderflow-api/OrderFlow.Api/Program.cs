@@ -16,6 +16,8 @@ using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.IdentityModel.Tokens;
 using System.Text;
 
+using OrderFlow.Api.Configuration;
+
 using OrderFlow.Api.Exceptions;
 
 var builder = WebApplication.CreateBuilder(args);
@@ -24,6 +26,10 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
 
 var jwtKey = builder.Configuration["Jwt:Key"];
+
+
+builder.Services.Configure<CacheOptions>(
+    builder.Configuration.GetSection(CacheOptions.SectionName));
 
 // Seriço de autentição
 builder.Services

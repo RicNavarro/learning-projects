@@ -8,6 +8,8 @@ using OrderFlow.Api.Repositories.Interfaces;
 using OrderFlow.Api.Exceptions;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Primitives;
+using Microsoft.Extensions.Options;
+using OrderFlow.Api.Configuration;
 
 namespace OrderFlow.Api.Services
 {
@@ -17,15 +19,18 @@ namespace OrderFlow.Api.Services
         private readonly ILogger<OrderService> _logger;
         private readonly IMemoryCache _cache;
         private static CancellationTokenSource _ordersCacheTokenSource = new();
+        private readonly CacheOptions _cacheOptions;
 
         public OrderService(
             IOrderRepository repository,
             ILogger<OrderService> logger,
-            IMemoryCache cache)
+            IMemoryCache cache,
+            IOptions<CacheOptions> cacheOptions)
         {
             _repository = repository;
             _logger = logger;
             _cache = cache;
+            _cacheOptions = cacheOptions.Value;
         }
 
 
@@ -115,7 +120,7 @@ namespace OrderFlow.Api.Services
                 cacheKey,
                 response,
                 new MemoryCacheEntryOptions()
-                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(5))
+                    .SetAbsoluteExpiration(TimeSpan.FromMinutes(_cacheOptions.OrdersExpirationMinutes))
                     .AddExpirationToken(
                         new CancellationChangeToken(
                             _ordersCacheTokenSource.Token)));

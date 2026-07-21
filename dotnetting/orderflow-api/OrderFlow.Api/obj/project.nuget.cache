@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "dgSpecHash": "3rnLUH6cJ6ecOcaudZeCCgR+x6W/ZD83gFaqMnIJ5tkdUVsZmdJPJy+cqN650W0WhPVBtlyoIuVj56wKw85Z2Q==",
+  "dgSpecHash": "RblhubnTqVcNcnhriwhHQDdfuVKy1xBfyrA9UaOxWze40oft/0+/v2aQMQ4DjmmdXSGCDH40KwYMazVy+mWMIw==",
   "success": true,
   "projectFilePath": "/home/ricardonavarro/HDD/Files/dev/study/learning/dotnetting/orderflow-api/OrderFlow.Api/OrderFlow.Api.csproj",
   "expectedPackageFiles": [

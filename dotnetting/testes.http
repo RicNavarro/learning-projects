@@ -29,7 +29,7 @@
 //GET /api/orders?page=1&pageSize=10
 
 
-GET http://localhost:5130/api/orders?page=1&pageSize=10
+GET http://localhost:5130/api/orders
 Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhZG1pbkBvcmRlcmZsb3cuY29tIiwiZXhwIjoxNzg0Mjg4NTcwLCJpc3MiOiJPcmRlckZsb3ciLCJhdWQiOiJPcmRlckZsb3dVc2VycyJ9.gnxmeG-4gem_cbPVefzic6oIAiB5zGuoZDtWUqg3dwU
 
 
@@ -41,9 +41,9 @@ Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hc
 Content-Type: application/json
 
 {
-    "description": "Sonic Frontiers: Definitive Edition",
-    "amount": 350,
-    "clientId": 2
+    "description": "Super Mario 64",
+    "amount": 60,
+    "clientId": 1
 }
 
 
