@@ -19,9 +19,6 @@ public class OrderServiceTests
     {
         // Arrange
 
-        var loggerMock = new Mock<ILogger<OrderService>>();
-
-        
 
         var repositoryMock = new Mock<IOrderRepository>();
 
@@ -33,12 +30,7 @@ public class OrderServiceTests
                 ClientId = 1
             });
 
-        var service = new OrderService(
-            repositoryMock.Object,
-            loggerMock.Object,
-            CreateMemoryCache(),
-            CreateCacheOptions());
-
+        var service = ServiceFactory.CreateOrderService(repositoryMock);
         // Act
 
         var result = await service.GetByIdAsync(1);
@@ -73,20 +65,12 @@ public class OrderServiceTests
     {
         var repositoryMock = new Mock<IOrderRepository>();
 
-        var loggerMock = new Mock<ILogger<OrderService>>();
-
-        
-
         repositoryMock
             .Setup(x => x.GetByIdAsync(999))
             .ReturnsAsync((Order?)null);
 
-        var service = new OrderService(
-            repositoryMock.Object,
-            loggerMock.Object,
-            CreateMemoryCache(),
-            CreateCacheOptions());
-
+        var service = ServiceFactory.CreateOrderService(repositoryMock);
+        
         Func<Task> action = async () =>
             await service.GetByIdAsync(999);
 
@@ -99,10 +83,7 @@ public class OrderServiceTests
     public async Task Create_ShouldCreateOrder()
     {
         // Arrange
-
-        var loggerMock = new Mock<ILogger<OrderService>>();
-
-        
+ 
 
         //var context = DbContextFactory.Create();
         var repositoryMock = new Mock<IOrderRepository>();
@@ -111,11 +92,7 @@ public class OrderServiceTests
             .Setup(x => x.ClientExistsAsync(1))
             .ReturnsAsync(true);
 
-        var service = new OrderService(
-            repositoryMock.Object,
-            loggerMock.Object,
-            CreateMemoryCache(),
-            CreateCacheOptions());
+        var service = ServiceFactory.CreateOrderService(repositoryMock);
 
         var request = new CreateOrderRequest
         {
@@ -147,10 +124,6 @@ public class OrderServiceTests
     {
         // Arrange
 
-        var loggerMock = new Mock<ILogger<OrderService>>();
-
-        
-
         //var context = DbContextFactory.Create();
         var repositoryMock = new Mock<IOrderRepository>();
 
@@ -158,11 +131,7 @@ public class OrderServiceTests
             .Setup(x=>x.ClientExistsAsync(999))
             .ReturnsAsync(false);
 
-        var service = new OrderService(
-            repositoryMock.Object,
-            loggerMock.Object,
-            CreateMemoryCache(),
-            CreateCacheOptions());
+        var service = ServiceFactory.CreateOrderService(repositoryMock);
 
         var request =
         new CreateOrderRequest
@@ -188,19 +157,12 @@ public class OrderServiceTests
     {
         var repositoryMock = new Mock<IOrderRepository>();
 
-        var loggerMock = new Mock<ILogger<OrderService>>();
-
-        
-
         repositoryMock
             .Setup(x => x.DeleteAsync(999))
             .ReturnsAsync(false);
 
-        var service = new OrderService(
-            repositoryMock.Object,
-            loggerMock.Object,
-            CreateMemoryCache(),
-            CreateCacheOptions());
+        var service = ServiceFactory.CreateOrderService(repositoryMock);
+
 
         Func<Task> action = async () =>
             await service.DeleteAsync(999);
@@ -219,20 +181,13 @@ public class OrderServiceTests
         //var context = DbContextFactory.Create();
         var repositoryMock = new Mock<IOrderRepository>();
 
-        var loggerMock = new Mock<ILogger<OrderService>>();
-
-        
-
         repositoryMock
             .Setup(x=>x.DeleteAsync(1))
             .ReturnsAsync(true);
 
-        var service = new OrderService(
-            repositoryMock.Object,
-            loggerMock.Object,
-            CreateMemoryCache(),
-            CreateCacheOptions());
-            
+        var service = ServiceFactory.CreateOrderService(repositoryMock);
+
+
         //Act
 
         Func<Task> action = async () =>
@@ -255,8 +210,6 @@ public class OrderServiceTests
         // Arrange
 
         var repositoryMock = new Mock<IOrderRepository>();
-
-        var loggerMock = new Mock<ILogger<OrderService>>();
 
         var orders = new List<Order>
         {
@@ -291,11 +244,7 @@ public class OrderServiceTests
                     r.PageSize == 10)))
             .ReturnsAsync((orders, 12));
 
-        var service = new OrderService(
-            repositoryMock.Object,
-            loggerMock.Object,
-            CreateMemoryCache(),
-            CreateCacheOptions());
+        var service = ServiceFactory.CreateOrderService(repositoryMock);
 
         var request = new GetOrdersRequest
         {
@@ -336,7 +285,6 @@ public class OrderServiceTests
         // Arrange
 
         var repositoryMock = new Mock<IOrderRepository>();
-        var loggerMock = new Mock<ILogger<OrderService>>();
 
         repositoryMock
             .Setup(x => x.GetPagedAsync(
@@ -345,11 +293,8 @@ public class OrderServiceTests
                     r.PageSize == 25)))
             .ReturnsAsync((new List<Order>(), 50));
 
-        var service = new OrderService(
-            repositoryMock.Object,
-            loggerMock.Object,
-            CreateMemoryCache(),
-            CreateCacheOptions());
+
+        var service = ServiceFactory.CreateOrderService(repositoryMock);
 
         var request = new GetOrdersRequest
         {
@@ -377,17 +322,12 @@ public class OrderServiceTests
         // Arrange
 
         var repositoryMock = new Mock<IOrderRepository>();
-        var loggerMock = new Mock<ILogger<OrderService>>();
 
         repositoryMock
             .Setup(x => x.ClientExistsAsync(1))
             .ReturnsAsync(true);
 
-        var service = new OrderService(
-            repositoryMock.Object,
-            loggerMock.Object,
-            CreateMemoryCache(),
-            CreateCacheOptions());
+        var service = ServiceFactory.CreateOrderService(repositoryMock);
 
         var request = new CreateOrderRequest
         {
@@ -419,17 +359,12 @@ public class OrderServiceTests
         // Arrange
 
         var repositoryMock = new Mock<IOrderRepository>();
-        var loggerMock = new Mock<ILogger<OrderService>>();
 
         repositoryMock
             .Setup(x => x.GetPagedAsync(It.IsAny<GetOrdersRequest>()))
             .ReturnsAsync((new List<Order>(), totalItems));
 
-        var service = new OrderService(
-            repositoryMock.Object,
-            loggerMock.Object,
-            CreateMemoryCache(),
-            CreateCacheOptions());
+        var service = ServiceFactory.CreateOrderService(repositoryMock);
 
         var request = new GetOrdersRequest
         {
