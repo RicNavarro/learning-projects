@@ -1,3 +1,4 @@
+using Asp.Versioning;
 using Microsoft.AspNetCore.Mvc;
 using OrderFlow.Api.Models;
 using OrderFlow.Api.Services;
@@ -9,7 +10,8 @@ namespace OrderFlow.Api.Controllers{
 
     [Authorize]
     [ApiController]
-    [Route("api/[controller]")]
+    [ApiVersion("1.0")]
+    [Route("api/v{version:apiVersion}/[controller]")]
     public class ClientController : ControllerBase{
 
         private readonly IClientService _service;

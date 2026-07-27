@@ -27,10 +27,10 @@
 // GET /api/orders?sortBy=amount
 // GET http://localhost:5130/api/orders?sortBy=amount&sortDirection=desc
 //GET /api/orders?page=1&pageSize=10
-//GET /health
+//GET http://localhost:5130/health
 
-GET http://localhost:5130/health
-Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhZG1pbkBvcmRlcmZsb3cuY29tIiwiZXhwIjoxNzg0ODEzMjA1LCJpc3MiOiJPcmRlckZsb3ciLCJhdWQiOiJPcmRlckZsb3dVc2VycyJ9.1rzqNSZivEdoVYng2PtR9FSexUAf8Qp7zdqIhBvPzHc
+GET http://localhost:5130/api/v1/orders
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJodHRwOi8vc2NoZW1hcy54bWxzb2FwLm9yZy93cy8yMDA1LzA1L2lkZW50aXR5L2NsYWltcy9lbWFpbGFkZHJlc3MiOiJhZG1pbkBvcmRlcmZsb3cuY29tIiwiZXhwIjoxNzg1MTU1NjE2LCJpc3MiOiJPcmRlckZsb3ciLCJhdWQiOiJPcmRlckZsb3dVc2VycyJ9.B4Y4nd6Br7_3GMYKfpswNfwVLzugjlZ49S8zdvtSy9w
 
 
 

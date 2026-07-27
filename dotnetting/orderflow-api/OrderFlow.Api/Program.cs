@@ -1,5 +1,6 @@
 using OrderFlow.Api.Data;
 using Microsoft.EntityFrameworkCore;
+using Asp.Versioning;
 
 using OrderFlow.Api.Services;
 
@@ -94,7 +95,12 @@ builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
 builder.Services.AddHealthChecks().AddSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")!);
 
-
+builder.Services.AddApiVersioning(options =>
+{
+    options.DefaultApiVersion = new ApiVersion(1, 0);
+    options.AssumeDefaultVersionWhenUnspecified = true;
+    options.ReportApiVersions = true;
+});
 
 var app = builder.Build();
 
