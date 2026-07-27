@@ -63,11 +63,12 @@ builder.Services.AddAuthorization();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options =>
 {
-    var xmlFile = $"{System.Reflection.Assembly.GetExecutingAssembly().GetName().Name}.xml";
-
-    var xmlPath = Path.Combine(AppContext.BaseDirectory, xmlFile);
-
-    options.IncludeXmlComments(xmlPath);
+    options.SwaggerDoc("v1", new()
+    {
+        Title = "OrderFlow API",
+        Version = "v1",
+        Description = "API para gerenciamento de pedidos"
+    });
 });
 
 // Dependency Injection (DI)
@@ -95,12 +96,18 @@ builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 
 builder.Services.AddHealthChecks().AddSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")!);
 
-builder.Services.AddApiVersioning(options =>
-{
-    options.DefaultApiVersion = new ApiVersion(1, 0);
-    options.AssumeDefaultVersionWhenUnspecified = true;
-    options.ReportApiVersions = true;
-});
+builder.Services
+    .AddApiVersioning(options =>
+    {
+        options.DefaultApiVersion = new ApiVersion(1, 0);
+        options.AssumeDefaultVersionWhenUnspecified = true;
+        options.ReportApiVersions = true;
+    })
+    .AddApiExplorer(options =>
+    {
+        options.GroupNameFormat = "'v'VVV";
+        options.SubstituteApiVersionInUrl = true;
+    });
 
 var app = builder.Build();
 
@@ -108,7 +115,10 @@ var app = builder.Build();
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
-    app.UseSwaggerUI();
+    app.UseSwaggerUI(options =>
+    {
+        options.SwaggerEndpoint("/swagger/v1/swagger.json", "OrderFlow API v1");
+    });
 }
 
 app.UseHttpsRedirection();
