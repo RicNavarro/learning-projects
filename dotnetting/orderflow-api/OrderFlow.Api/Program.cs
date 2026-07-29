@@ -2,6 +2,9 @@ using OrderFlow.Api.Data;
 using Microsoft.EntityFrameworkCore;
 using Asp.Versioning;
 
+using Microsoft.AspNetCore.ResponseCompression;
+using System.IO.Compression;
+
 using OrderFlow.Api.Services;
 
 using OrderFlow.Api.Services.Interfaces;
@@ -20,6 +23,9 @@ using System.Text;
 using OrderFlow.Api.Configuration;
 
 using OrderFlow.Api.Exceptions;
+
+
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -109,6 +115,25 @@ builder.Services
         options.SubstituteApiVersionInUrl = true;
     });
 
+builder.Services.AddResponseCompression(options =>
+{
+    options.EnableForHttps = true;
+
+    options.Providers.Add<BrotliCompressionProvider>();
+    options.Providers.Add<GzipCompressionProvider>();
+});
+
+builder.Services.Configure<BrotliCompressionProviderOptions>(options =>
+{
+    options.Level = CompressionLevel.Fastest;
+});
+
+builder.Services.Configure<GzipCompressionProviderOptions>(options =>
+{
+    options.Level = CompressionLevel.Fastest;
+});
+
+
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
@@ -120,6 +145,8 @@ if (app.Environment.IsDevelopment())
         options.SwaggerEndpoint("/swagger/v1/swagger.json", "OrderFlow API v1");
     });
 }
+
+app.UseResponseCompression();
 
 app.UseHttpsRedirection();
 
